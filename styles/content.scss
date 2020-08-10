@@ -1,0 +1,22 @@
+@import './vars.scss';
+
+.content{
+    // overflow-y: scroll;
+    transition: all 0.2s ease-out;
+    @media (min-width: $xs) {
+        width: 100%;
+        margin-left: calc(-#{$drawer-width} + 50px);
+    }
+    @media (min-width: $md) {
+        margin-left: calc(-#{$drawer-width} + 50px);
+        width: 100%;
+    }
+  }
+
+#menu-toggle:checked ~ .content{
+    @media (min-width: $md) {
+        margin-left: 0;
+        width: calc(100% - #{$drawer-width});
+    }
+
+}

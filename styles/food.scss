@@ -1,0 +1,38 @@
+@import './vars.scss';
+
+.food{
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 10px 1px rgba(194,194,194,1);
+    -moz-box-shadow: 0px 0px 10px 1px rgba(194,194,194,1);
+    box-shadow: 0px 0px 10px 1px rgba(194,194,194,1);
+    border-radius: 5px;
+    .stars{
+        float: right;
+    }
+    .cat{
+        font-size: 12px;
+    }
+    img{
+        width: 100%;
+    }
+    .btn{
+        padding: 10px;
+        background-color: $yellow;
+        color: $red;
+        font-family: Rounds;
+        float: right;
+    }
+    .btn:hover{
+        color: $blue;
+    }
+    .price{
+        font-weight: 800;
+    }
+    .name{
+        font-weight: 800;
+    }
+    .eng{
+        font-size: 12px;
+        color: $red;
+    }
+}

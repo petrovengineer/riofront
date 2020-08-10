@@ -1,0 +1,73 @@
+@import './vars.scss';
+
+.top-header{
+	// height: 22px;
+	background-color: white;
+}
+.top-header-icon{
+	fill: $blue;
+}
+.top-header-item{
+	font-size: 14px;
+	cursor: pointer;
+	span{
+		margin-left: 5px;
+	}
+}
+.header{
+	padding-top: 12px;
+	padding-bottom: 12px;
+	position: relative;
+	.img-logo{
+		// position: absolute;
+		// left: 12px;
+		height: 50px;
+		// bottom:12px;
+	}
+}
+.inline-menu{
+	a{
+		padding: 13px 20px;
+		font-family: Rounds;
+		color: $blue;
+	}
+}
+#header{
+	z-index: 100;
+	width: 100%;
+	background-color: white;
+	-webkit-box-shadow: 0 8px 6px -6px $grey;
+	   -moz-box-shadow: 0 8px 6px -6px $grey;
+	        box-shadow: 0 8px 6px -6px $grey;
+}
+.sticky {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+  }
+  .svg-img-del{
+	  cursor: pointer;
+	  fill: $grey;
+	  :hover{
+		  fill: $red;
+	  }
+  }
+  .cart-item{
+	  display: flex;
+	  align-items: top;
+	  color: $blue;
+	  justify-content: space-between;
+  }
+  .cart-btn{
+    background-color: #FEC612;
+    color: $red;
+    font-family: Rounds;
+	float: right;
+  }
+  .cart-btn:hover{
+	  color: $blue;
+  }
+  .header-city{
+	  color:$red;
+  }

@@ -1,0 +1,28 @@
+@import './vars.scss';
+
+.footer-wrap{
+    background-color: $blue;
+    color: white;
+    height: 150px;
+
+}
+.footer{
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    .left{
+        height: 100%;
+    }
+    .right{
+        height: 100%;
+        img{
+            height: 40px;
+            margin: 0 10px;
+        }
+    }
+}
+.footer-icon{
+            path{
+                fill: white;
+            }
+}
