@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Layout from '../components/layout'
 import {fetch} from '../usefull'
 import axios from 'axios'
+
 // require('dotenv').config();
 
 export default function Home({foodtypes}) {
@@ -24,7 +25,6 @@ export default function Home({foodtypes}) {
 export async function getStaticProps(){
   const {data} = await fetch({ query: '{foodtypes{_id name}}',
   variables: null });
-  console.log("DATA", data);
   return {
       props: {foodtypes: data.data.foodtypes}
   }

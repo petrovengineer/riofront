@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start"
   },
   "dependencies": {
+    "@svgr/webpack": "^5.4.0",
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.2",
@@ -15,6 +16,7 @@
     "fs": "0.0.1-security",
     "jquery": "^3.5.1",
     "next": "9.5.1",
+    "next-images": "^1.4.1",
     "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",
     "react": "16.13.1",

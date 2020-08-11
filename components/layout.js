@@ -1,10 +1,13 @@
+import Top from "./top";
+
 const { default: Header } = require("./header");
 
 function Layout({ children, foodtypes }) {
-    return <div>
+    return <>
+                <Top/>
                 <Header foodtypes = {foodtypes}/>
                 {children}
-            </div>
+            </>
   }
   
   export default Layout

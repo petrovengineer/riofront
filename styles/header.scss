@@ -5,7 +5,9 @@
 	background-color: white;
 }
 .top-header-icon{
-	fill: $blue;
+	path{
+		fill: $blue;
+	}
 }
 .top-header-item{
 	font-size: 14px;

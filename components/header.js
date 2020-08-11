@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 export default ({foodtypes})=>{
     useEffect(()=>{
+        console.log("FOODTYPES",foodtypes);
         window.onscroll = function() {myFunction()};
         var header = document.getElementById("header");
         var sticky = header.offsetTop;
