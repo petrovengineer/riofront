@@ -1,6 +1,7 @@
 import '../styles/main.scss'
-import {AppContext} from '../context';
-import { useState, useEffect } from 'react';
+import {AppContext} from '../context'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 if (typeof window !== "undefined") {
   const $ = require("jquery");
   require("popper.js");
@@ -10,45 +11,44 @@ if (typeof window !== "undefined") {
 
 function MyApp({ Component, pageProps }) {
   const [state, setStateSimple] = useState({
-    customer: null
+    customer: null,
+    accessToken: null,
+    refreshToken: null,
+    cart: [],
   });
-
-
-
   const persist = (name)=>{
     return {
       get: state[name],
       set:(value)=>{
-        console.log("SET", state);
         if(JSON.stringify(value)!==localStorage.getItem(name)){
-          console.log("LOCAL", value)
           localStorage.setItem(name, JSON.stringify(value))
         };
         const newState = Object.assign({}, state);
-        console.log("NEW State", newState);
         newState[name].get = value;
         setStateSimple(newState);
       },
       clear:()=>{
         localStorage.removeItem(name);
-        const persistState = Object.assign({}, customer);
-        persistState.get = null;
-        set(persistState);
+        const newState = Object.assign({}, state);
+        newState[name].get = null;
+        setStateSimple(newState);
       }
   }}
   
   const restore = (name)=>{
-      console.log("RESTORE", state);
       const local = localStorage.getItem(name);      
       if((state[name].get==null || state[name].get.length==0) && local!=null){
-        console.log("RESTORE2 local", local);
         state[name].set(JSON.parse(local));
       }
   }
   useEffect(()=>{
-    console.log("USEEFFECT")
-    state.customer = persist('customer');
-    restore('customer');
+    for(var key in state){
+      state[key] = persist(key);
+      restore(key);
+    }
+    axios.defaults.baseURL = process.env.API;
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+state.accessToken.get;
+    axios.defaults.headers.post['Content-Type'] = 'application/json';
   }, [])
   useEffect(()=>{
     console.log("CHANGE", state);

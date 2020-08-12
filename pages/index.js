@@ -1,14 +1,10 @@
 import Head from 'next/head'
 import Layout from '../components/layout'
 import {fetch} from '../usefull'
-import axios from 'axios'
-
-// require('dotenv').config();
+import Banner from '../components/Banner'
+import List from '../components/List'
 
 export default function Home({foodtypes}) {
-  axios.defaults.baseURL = process.env.API;
-  // axios.defaults.headers.common['Authorization'] = 'Bearer '+this.state.accessToken.get;
-  axios.defaults.headers.post['Content-Type'] = 'application/json';
   return (
     <>
       <Head>
@@ -16,7 +12,10 @@ export default function Home({foodtypes}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout foodtypes={foodtypes}>
-        <div></div>
+        <Banner/>
+        {foodtypes.map((type)=>(
+          <List type={type} key={type._id}/>
+        ))}
       </Layout>
     </>
   )

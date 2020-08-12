@@ -1,6 +1,6 @@
 import React, {useState, useRef, useContext, useEffect} from 'react'
 import Modal from './Modal';
-import User from '../imgs/user.svg';
+import User from '../imgs/svg/user.svg';
 import FormLogin from './FormLogin';
 import FormReg from './FormReg';
 import {AppContext} from '../context';
@@ -22,7 +22,7 @@ function Title(){
         </div>
     )
 }
-export default ({activate})=>{
+const login = ({activate})=>{
     const [modal, toggleModal] = useState(false);
     let loginModalRef = useRef();
     const context = useContext(AppContext);
@@ -41,7 +41,7 @@ export default ({activate})=>{
                         {customer.get.name}
                     </span>
                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <Link className="dropdown-item" href="/orders">Заказы</Link>
+                        <Link href="/orders"><a className="dropdown-item">Заказы</a></Link>
                         <span 
                         onClick={()=>{
                             customer.clear(customer); 
@@ -63,3 +63,5 @@ export default ({activate})=>{
 
     )
 }
+
+export default login;

@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import {AppContext} from '../context';
 
-export default ({close, activate})=>{
+const FormLogin = ({close, activate})=>{
     const [email, changeEmail] = useState('petrovengineer@gmail.com');
     const [password, changePassword] = useState('1212');
     const [load, changeLoad] = useState(false);
@@ -10,8 +10,7 @@ export default ({close, activate})=>{
     const [err, chErr] = useState(null);
     const context = useContext(AppContext);
     useEffect(()=>{
-        console.log("CONTEXT", context);
-
+        // console.log("CONTEXT", context);
     }, [])
     useEffect(()=>{
         if(activate){setInfo('Активация прошла успешно!')}
@@ -27,11 +26,10 @@ export default ({close, activate})=>{
             chErr(null);
             setInfo(null);
             changeLoad(true);
-            console.log("CONTEXT", context);
             const res = await axios.post(process.env.NEXT_PUBLIC_API+'/auth/login', {email, password});
             if(res.data.accessToken!=null && res.data.refreshToken!=null){
-                // context.accessToken.set(res.data.accessToken);
-                // context.refreshToken.set(res.data.refreshToken);
+                context.accessToken.set(res.data.accessToken);
+                context.refreshToken.set(res.data.refreshToken);
                 context.customer.set(res.data.customer);
             }
             changeLoad(false);
@@ -93,3 +91,5 @@ export default ({close, activate})=>{
 const loadStyle = {
     height: '20px',
 }
+
+export default FormLogin;

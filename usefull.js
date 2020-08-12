@@ -11,7 +11,7 @@ import axios from 'axios';
 const fetch =  async (query)=>{
     return new Promise(async (done, fail)=>{
         try{
-            console.log("PROCESS ENV", process.env.NEXT_PUBLIC_API);
+            console.log("PROCESS ENV PUBLIC", process.env.NEXT_PUBLIC_API);
             const data = await axios.post(process.env.NEXT_PUBLIC_API+'/graphql', query);
             done(data);
         }catch(err){

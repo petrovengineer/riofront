@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 
-export default ()=>{
+const FormReg = ()=>{
     const [email, setEmail] = useState('0424342@mail.ru');
     const [password1, setPassword1] = useState('1212');
     const [password2, setPassword2] = useState('1212');
@@ -38,7 +38,7 @@ export default ()=>{
                 setErr('Пароли не совпадают!');
                 return;
             }
-            await axios.post('/auth/reg',{email, password: password1, name, phone, address});
+            await axios.post(process.env.NEXT_PUBLIC_API+'/auth/reg',{email, password: password1, name, phone, address});
             setLoad(false);
             setEmail(''); setPassword1(''); setPassword2(''); setName(''); setPhone(''); setAddress('');
             setInfo('Вы успешно зарегистрировались! Проверьте почту, что бы подтвердить аккаунт.');
@@ -110,3 +110,5 @@ export default ()=>{
 const loadStyle = {
     height: '20px',
 }
+
+export default FormReg;

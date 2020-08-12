@@ -1,11 +1,11 @@
 import React from 'react';
-import Phone from '../imgs/phone.svg';
-import Clock from '../imgs/clock.svg';
-import Search from '../imgs/search.svg';
-import Heart from '../imgs/heart.svg';
+import Phone from '../imgs/svg/phone.svg';
+import Clock from '../imgs/svg/clock.svg';
+import Search from '../imgs/svg/search.svg';
+import Heart from '../imgs/svg/heart.svg';
 import Login from './login';
 
-export default ({activate})=>{
+const top = ({activate})=>{
     return (
         <div className="container-xl">
             <div className="top-header d-flex justify-content-between">
@@ -34,3 +34,5 @@ export default ({activate})=>{
         </div>
     )
 }
+
+export default top;
