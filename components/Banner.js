@@ -3,7 +3,7 @@ import {useEffect} from 'react';
 import banner1 from '../imgs/banner1.jpg';
 import banner2 from '../imgs/banner2.jpg';
 
-export default ()=>{
+const Banner = ()=>{
     useEffect(()=>{
         if(window!=null){window.$('.carousel').carousel({
             interval: 5000
@@ -40,3 +40,5 @@ export default ()=>{
         </div>
     )
 }
+
+export default Banner;

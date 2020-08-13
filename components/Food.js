@@ -3,7 +3,7 @@ import noimage from '../imgs/noimage.png';
 import {AppContext} from '../context';
 import {arrayBufferToBase64} from '../usefull';
 
-export default ({food, ings})=>{
+const Food = ({food, ings})=>{
     const [info, showInfo] = useState([]);
     const {cart} = useContext(AppContext);
     const addToCart = (id)=>{
@@ -56,3 +56,5 @@ export default ({food, ings})=>{
         </div>
     )
 }
+
+export default Food;

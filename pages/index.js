@@ -22,9 +22,20 @@ export default function Home({foodtypes}) {
 }
 
 export async function getStaticProps(){
-  const {data} = await fetch({ query: '{foodtypes{_id name}}',
-  variables: null });
-  return {
-      props: {foodtypes: data.data.foodtypes}
+  try{
+    const ftdata = await fetch({ query: '{foodtypes{_id name}}', variables: null });
+    const foodtypes = ftdata.data.data.foodtypes;
+    const ftsWithFood = foodtypes.map(async (ft)=>{
+        const fooddata = await fetch({ query: '{food{name _id}}', variables: null});
+        return ft.food = fooddata.data.data.food;
+    })
+    console.log("FTWF", ftsWithFood);
+    return {
+      props: {foodtypes}
+    }
   }
+  catch(err){
+    console.log(err);
+  }
+
 }
