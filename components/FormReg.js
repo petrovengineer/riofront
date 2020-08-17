@@ -33,18 +33,28 @@ const FormReg = ()=>{
         try{
             setErr(null);
             setInfo(null);
-            setLoad(true);
+            let re = /\+(\b7\d{10}\b)/;
+            var valid = re.test(phone);
+            if(!valid){
+                setErr('Неверный формат телефона!');
+                return;
+            }
             if(password1!==password2){
                 setErr('Пароли не совпадают!');
                 return;
             }
-            await axios.post(process.env.NEXT_PUBLIC_API+'/auth/reg',{email, password: password1, name, phone, address});
+            if(name==''){
+                setErr('Имя не должно быть пустым!');
+                return;
+            }
+            setLoad(true);
+            await axios.post(process.env.NEXT_PUBLIC_API+'/auth/reg',{password: password1, name, phone});
             setLoad(false);
             setEmail(''); setPassword1(''); setPassword2(''); setName(''); setPhone(''); setAddress('');
-            setInfo('Вы успешно зарегистрировались! Проверьте почту, что бы подтвердить аккаунт.');
+            setInfo('Вы успешно зарегистрировались!');
         }catch(err){
             setLoad(false);
-            setErr('Ошибка регистрации!');
+            setErr('Ошибка регистрации! Возможно номер уже зарегистрирован...');
         }
     }
     return(
@@ -52,10 +62,20 @@ const FormReg = ()=>{
             <div className="modal-body">
                 <table className="table table-borderless">
                     <tbody>
-                        <tr>
+                        {/* <tr>
                             <td><span className="input-group-text" id="basic-addon1">Email</span></td>
                             <td><input type="text" className="form-control" placeholder="example@mail.ru" 
                                 onChange={handleEmail} value={email}/></td>
+                        </tr> */}
+                        <tr>
+                            <td><span className="input-group-text" id="basic-addon1">Имя</span></td>
+                            <td><input type="text" className="form-control" placeholder="Иван"
+                                onChange={handleName} value={name}/></td>
+                        </tr>
+                        <tr>
+                            <td><span className="input-group-text" id="basic-addon1">Телефон в формате +71112223344</span></td>
+                            <td> <input type="text" className="form-control" placeholder="+79011231212"
+                                onChange={handlePhone} value={phone}/></td>
                         </tr>
                         <tr>
                             <td><span className="input-group-text" id="basic-addon1">Пароль</span></td>
@@ -67,21 +87,11 @@ const FormReg = ()=>{
                             <td><input type="password" className="form-control" placeholder="*******"
                                 onChange={handlePassword2} value={password2}/></td>
                         </tr>
-                        <tr>
-                            <td><span className="input-group-text" id="basic-addon1">Имя</span></td>
-                            <td><input type="text" className="form-control" placeholder="Иван"
-                                onChange={handleName} value={name}/></td>
-                        </tr>
-                        <tr>
-                            <td><span className="input-group-text" id="basic-addon1">Телефон для связи</span></td>
-                            <td> <input type="text" className="form-control" placeholder="+79011231212"
-                                onChange={handlePhone} value={phone}/></td>
-                        </tr>
-                        <tr>
+                        {/* <tr>
                             <td><span className="input-group-text" id="basic-addon1">Адрес доставки</span></td>
                             <td><input type="text" className="form-control" placeholder="г. Чехов, пр. Победы, д. 20"
                                 onChange={handleAddress} value={address}/></td>
-                        </tr>
+                        </tr> */}
                     </tbody>
                 </table>
             </div>

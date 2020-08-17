@@ -3,7 +3,7 @@ import axios from 'axios';
 import {AppContext} from '../context';
 
 const FormLogin = ({close, activate})=>{
-    const [email, changeEmail] = useState('petrovengineer@gmail.com');
+    const [phone, changePhone] = useState('+79500424342');
     const [password, changePassword] = useState('1212');
     const [load, changeLoad] = useState(false);
     const [info, setInfo] = useState(null);
@@ -15,8 +15,8 @@ const FormLogin = ({close, activate})=>{
     useEffect(()=>{
         if(activate){setInfo('Активация прошла успешно!')}
     }, [activate])
-    const handleEmail = (e)=>{
-        changeEmail(e.currentTarget.value);
+    const handlePhone = (e)=>{
+        changePhone(e.currentTarget.value);
     }
     const handlePassword = (e)=>{
         changePassword(e.currentTarget.value);
@@ -25,8 +25,14 @@ const FormLogin = ({close, activate})=>{
         try{
             chErr(null);
             setInfo(null);
+            let re = /\+(\b7\d{10}\b)/;
+            var valid = re.test(phone);
+            if(!valid){
+                chErr('Неверный формат телефона!');
+                return;
+            }
             changeLoad(true);
-            const res = await axios.post(process.env.NEXT_PUBLIC_API+'/auth/login', {email, password});
+            const res = await axios.post(process.env.NEXT_PUBLIC_API+'/auth/login', {phone, password});
             if(res.data.accessToken!=null && res.data.refreshToken!=null){
                 context.accessToken.set(res.data.accessToken);
                 context.refreshToken.set(res.data.refreshToken);
@@ -35,6 +41,7 @@ const FormLogin = ({close, activate})=>{
             changeLoad(false);
             close();
         } catch(err){
+            console.log(err)
             setInfo(null);
             chErr('Ошибка авторизации!');
             changeLoad(false);
@@ -46,12 +53,12 @@ const FormLogin = ({close, activate})=>{
                 <table className="table table-borderless">
                     <tbody>
                         <tr>
-                            <td><span className="input-group-text">Email</span></td>
+                            <td><span className="input-group-text">Номер телефона</span></td>
                             <td>
-                                <input type="text" className="form-control" placeholder="example@mail.ru" 
+                                <input type="text" className="form-control" placeholder="+71112223344" 
                                 // aria-label="Username" aria-describedby="basic-addon1"
-                                onChange={handleEmail}
-                                value={email}
+                                onChange={handlePhone}
+                                value={phone}
                                 />
                             </td>
                         </tr>
