@@ -1,7 +1,6 @@
 import React, {useContext, useState}  from 'react';
 import noimage from '../imgs/noimage.png';
 import {AppContext} from '../context';
-import {arrayBufferToBase64} from '../usefull';
 
 const Food = ({food, ings})=>{
     const [info, showInfo] = useState([]);
@@ -29,14 +28,14 @@ const Food = ({food, ings})=>{
         <div className=" food p-3">
             <img alt=""
             style={{borderRadius:'5px'}} 
-            src={food.img==null?noimage:`data:image/jpeg;base64,${arrayBufferToBase64(food.img.data.data)}`}/>
+            src={food.img==null?noimage:`data:image/jpeg;base64,${food.img.data}`}/>
             <div className="detail">
                 <p></p>
                 <span className="stars">
                 </span>
                 <p className="name">{food.name}</p>
                 <p className="eng">Состав: 
-                    {ings.filter((ing)=>food.ingredients.indexOf(ing._id)>-1).map((i)=>' '+i.name)} </p>
+                    {food.ingredients.map((i)=>' '+i.name)} </p>
                 <hr/>
                 {info.indexOf(food._id)>=0?<div className="alert alert-success mt-2 animate__animated animate__bounceIn" 
                 id={food._id}

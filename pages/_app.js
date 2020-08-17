@@ -16,9 +16,9 @@ function MyApp({ Component, pageProps }) {
     refreshToken: null,
     cart: [],
   });
-  const persist = (name)=>{
+  const persist = (name, value)=>{
     return {
-      get: state[name],
+      get: value,
       set:(value)=>{
         if(JSON.stringify(value)!==localStorage.getItem(name)){
           localStorage.setItem(name, JSON.stringify(value))
@@ -39,11 +39,13 @@ function MyApp({ Component, pageProps }) {
       const local = localStorage.getItem(name);      
       if((state[name].get==null || state[name].get.length==0) && local!=null){
         state[name].set(JSON.parse(local));
+      }else{
+        state[name].set(state[name].get);
       }
-  }
+    }
   useEffect(()=>{
     for(var key in state){
-      state[key] = persist(key);
+      state[key] = persist(key, state[key]);
       restore(key);
     }
     axios.defaults.baseURL = process.env.API;

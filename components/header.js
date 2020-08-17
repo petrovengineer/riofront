@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 // import Bag from './Bag';
 import Link from 'next/link';
 
-export default ({foodtypes})=>{
+const Header = ({foodtypes})=>{
     useEffect(()=>{
         window.onscroll = function() {myFunction()};
         var header = document.getElementById("header");
@@ -42,3 +42,6 @@ export default ({foodtypes})=>{
 
     )
 }
+
+
+export default Header;

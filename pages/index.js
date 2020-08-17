@@ -13,9 +13,9 @@ export default function Home({foodtypes}) {
       </Head>
       <Layout foodtypes={foodtypes}>
         <Banner/>
-        {foodtypes.map((type)=>(
-          <List type={type} key={type._id}/>
-        ))}
+        {foodtypes.map((type)=>{
+          return type.food!=null?<List type={type} key={type._id}/>:null
+        })}
       </Layout>
     </>
   )
@@ -25,11 +25,14 @@ export async function getStaticProps(){
   try{
     const ftdata = await fetch({ query: '{foodtypes{_id name}}', variables: null });
     const foodtypes = ftdata.data.data.foodtypes;
-    const ftsWithFood = foodtypes.map(async (ft)=>{
-        const fooddata = await fetch({ query: '{food{name _id}}', variables: null});
-        return ft.food = fooddata.data.data.food;
-    })
-    console.log("FTWF", ftsWithFood);
+    for(let i=0; i < foodtypes.length; i++){
+      var fooddata = await fetch(
+        {
+          query: "query fetchFood($_id:String!){food(_id:$_id){name _id ingredients{name} img{data contentType} coast}}",
+          variables:{_id: foodtypes[i]._id},
+        });
+      foodtypes[i].food = fooddata.data.data.food;
+    }
     return {
       props: {foodtypes}
     }
