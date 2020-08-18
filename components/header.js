@@ -1,8 +1,10 @@
-import React, {useEffect} from 'react'
-// import Bag from './Bag';
+import React, {useEffect, useContext} from 'react'
+import Bag from './Bag';
 import Link from 'next/link';
+import {AppContext} from '../context';
 
 const Header = ({foodtypes})=>{
+    const {cart} = useContext(AppContext);
     useEffect(()=>{
         window.onscroll = function() {myFunction()};
         var header = document.getElementById("header");
@@ -35,7 +37,7 @@ const Header = ({foodtypes})=>{
                             <a href={`#${ft._id}`} key={ft._id}>{ft.name}</a>
                         ))}
                     </div>
-                    {/* <Bag/> */}
+                    {cart.get!=null?<Bag/>:null}
                 </div>
             </div>
         </header>
