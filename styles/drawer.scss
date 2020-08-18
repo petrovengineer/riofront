@@ -5,19 +5,20 @@
     background-color: $drawer-color;
     width: $drawer-width;
     min-width: $drawer-width;
-    height: 100%;
-    height: 100%;
-    position: relative;
-    display: inline-block;
+    height: 100em;
+    position: fixed;
+    display: block;
     color: $drawer-text-color;
     transition: all 0.2s ease-out;
-    left: calc(-#{$drawer-width} + 50px);
-    // @media (min-width: $xs) {
-    // }
-    // @media (min-width: $md) {
-    //     left: 0;
-    // }
-    z-index: 1;
+    // left: -$drawer-width;
+    right: -$drawer-width;
+    top: 0;
+    z-index: 901;
+    .top-header-item{
+        path{
+            fill: white;
+        }
+    }
     a{
         color: white;  
     }
@@ -27,20 +28,21 @@
     .dItem{
         padding: 15px;
         text-align: left;
+        font-family: 'Rounds';
     }
 }
 
-// .drawer-open{
-//     left: 0;
-// }
 .nav-toggle {
     cursor: pointer;
     display: block;
-    height: $nav-size;
+    // height: $nav-size;
     position: absolute;
-    width: $nav-size;
-    right: 0;
+    // width: $nav-size;
+    left: 0;
     z-index: 2;
+    path{
+        fill: white;
+    }
 }
 .nav-toggle span {
     background-color: white;
@@ -64,7 +66,8 @@
 
 
 #menu-toggle:checked ~ .drawer {
-    left: 0;
+    // left: 0;
+    right: 0;
 }
 
 #menu-toggle:checked ~ .nav-toggle{

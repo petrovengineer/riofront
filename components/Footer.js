@@ -9,7 +9,7 @@ const Footer = ()=>{
     return (
         <div className="container-fluid footer-wrap">
             <div className="container-xl footer pt-4 pb-4">
-                <div className="left d-flex flex-column align-items-start justify-content-around">
+                <div className="left d-none d-sm-flex flex-column align-items-start justify-content-around">
                     <div className="footer-item">
                         <Phone className="footer-icon mr-2" width="20" height="20"/>
                         <span>+7(901)701-55-01</span>

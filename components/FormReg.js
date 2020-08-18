@@ -73,7 +73,7 @@ const FormReg = ()=>{
                                 onChange={handleName} value={name}/></td>
                         </tr>
                         <tr>
-                            <td><span className="input-group-text" id="basic-addon1">Телефон в формате +71112223344</span></td>
+                            <td><span className="input-group-text" id="basic-addon1">Телефон</span></td>
                             <td> <input type="text" className="form-control" placeholder="+79011231212"
                                 onChange={handlePhone} value={phone}/></td>
                         </tr>
