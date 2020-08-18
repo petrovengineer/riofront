@@ -63,7 +63,8 @@ const Bag = ()=>{
                             <span style={{cursor:"pointer"}}
                             onClick={
                                 ()=>{
-                                    const cartIds = cart.get.map((item)=>(item._id));
+                                    const cartIds = cart.get.map((item)=>(item.food._id));
+                                    console.log(cartIds);
                                     const index = cartIds.indexOf(good.food._id);
                                     const newCart = [...cart.get];
                                     newCart.splice(index, 1);

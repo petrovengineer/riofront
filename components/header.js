@@ -31,13 +31,13 @@ const Header = ({foodtypes, drawer, setDrawer})=>{
             style={{justifyContent:'space-between'}}>
                 <div style={{display:'flex', alignItems:'flex-end', alignItems:'center'}}>
                     <Link href='/'>
-                        <>
-                        <img src='/imgs/logo.png' alt="" className="img-logo d-none d-md-inline"/>
-                        <img src='/imgs/logosm.png' alt="" className="img-logo d-inline d-md-none"/>
-                        </>
+                        <a>
+                            <img src='/imgs/logo.png' alt="" className="img-logo d-none d-md-inline"/>
+                            <img src='/imgs/logosm.png' alt="" className="img-logo d-inline d-md-none"/>
+                        </a>
                     </Link>
                     <div className="d-none d-sm-flex flex-column flex-lg-row ml-3">
-                        <div className="top-header-item mb-1">
+                        <div className="top-header-item mb-1 d-flex">
                             <Phone className="top-header-icon mr-2" width="20" height="20"/>
                             <span>+7(901)701-55-01</span>
                         </div>
