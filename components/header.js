@@ -32,21 +32,20 @@ const Header = ({foodtypes, drawer, setDrawer})=>{
                 <div style={{display:'flex', alignItems:'flex-end', alignItems:'center'}}>
                     <Link href='/'>
                         <a>
-                            <img src='/imgs/logo.png' alt="" className="img-logo d-none d-md-inline"/>
-                            <img src='/imgs/logosm.png' alt="" className="img-logo d-inline d-md-none"/>
+                            <img src='/imgs/logo.png' alt="" className="img-logo d-none d-sm-inline"/>
+                            <img src='/imgs/logosm.png' alt="" className="img-logo d-inline d-sm-none"/>
                         </a>
                     </Link>
-                    <div className="d-none d-sm-flex flex-column flex-lg-row ml-3">
-                        <div className="top-header-item mb-1 d-flex">
-                            <Phone className="top-header-icon mr-2" width="20" height="20"/>
-                            <span>+7(901)701-55-01</span>
-                        </div>
-                        <div className="top-header-item">
-                            <Clock className="top-header-icon mr-2 ml-lg-2" width="20" height="20"/>
-                            <span>пн-вс с 9:00-22:00</span>
-                        </div>
+                </div>
+                <div className="d-none d-sm-flex flex-column flex-md-row ml-3">
+                    <div className="top-header-item mb-1 d-flex">
+                        <Phone className="top-header-icon mr-2" width="20" height="20"/>
+                        <span>+7(901)701-55-01</span>
                     </div>
-                    {/* <h4 className="pl-4 d-none d-sm-inline mb-0">г. Чехов</h4> */}
+                    <div className="top-header-item">
+                        <Clock className="top-header-icon mr-2 ml-md-2" width="20" height="20"/>
+                        <span>пн-вс с 9:00-22:00</span>
+                    </div>
                 </div>
                 <div style={{display:'flex', alignItems:'center'}}>
                     <div className="inline-menu align-items-center d-none d-lg-flex">
@@ -56,7 +55,7 @@ const Header = ({foodtypes, drawer, setDrawer})=>{
                     </div>
                     <Login/>
                     {cart.get!=null?<Bag/>:null}
-                    <Menu width="30" height="30" className="top-header-icon ml-3 d-inline d-lg-none"
+                    <Menu width="30" height="30" className="top-header-icon menu ml-3 d-inline d-lg-none"
                         onClick={()=>setDrawer(!drawer)}
                     />
                 </div>

@@ -19,12 +19,12 @@ const Drawer = ({drawer, setDrawer, foodtypes})=>{
                     <a className="dItem" href={`#${ft._id}`} key={ft._id} onClick={()=>{setDrawer(false)}}>{ft.name}</a>
                 ))}
             </div>
-            <div className="d-flex flex-column p-2" style={{position: 'absolute', top: 0, right: 0}}>
-                <div className="top-header-item mb-1 float-left">
+            <div className="d-flex flex-column p-3" style={{}}>
+                <div className="top-header-item mb-1 d-flex">
                     <Phone className="top-header-icon mr-2" width="20" height="20"/>
                     <span>+7(901)701-55-01</span>
                 </div>
-                <div className="top-header-item mt-1">
+                <div className="top-header-item mt-2 d-flex">
                     <Clock className="top-header-icon mr-2 ml-lg-2" width="20" height="20"/>
                     <span>пн-вс с 9:00-22:00</span>
                 </div>

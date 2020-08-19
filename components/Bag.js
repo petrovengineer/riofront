@@ -35,7 +35,7 @@ const Bag = ()=>{
                             <img alt="" 
                                 src={good.food.img==null?noimage:`data:image/jpeg;base64,${good.food.img.data}`} 
                                 width="50" height="50"/>
-                            <div className="pl-2 pr-2" style={{width:'170px'}}>
+                            <div className="pl-2 pr-2" style={{width:'200px'}}>
                                 <div>{good.food.name}</div>
                                 <span>
                                     <div className="plus-minus mr-1"
