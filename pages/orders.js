@@ -5,8 +5,9 @@ import noimage from '../imgs/noimage.png';
 import {AppContext} from '../context';
 import Link from 'next/link';
 import axios from 'axios';
+import FoodOrder from '../components/FoodOrder'
 
-export default ()=>{
+export default ({foodtypes})=>{
     const {customer, ingredients, accessToken} = useContext(AppContext);
     const [orders, setOrders] = useState([]);
     const [load, setLoad] = useState(false);
@@ -14,7 +15,6 @@ export default ()=>{
         try{
             console.log("FETCH DATA")
             setLoad(true);
-            // await fetch('/order', {customer: customer.get._id}, setData);
             var orders = await fetch(
                 {
                   query: "{orders{_id number cart{food{_id name img{data} coast} count}}}",
@@ -60,9 +60,7 @@ export default ()=>{
                                 :order.status==1?'готовится':order.status==2?'передан курьеру':'выполнен'}
                             </h6>
                             {order.cart.map((item)=>(
-                                <div key={item._id} className="col-12 pt-3 pb-3 d-flex align-items-center">
                                     <FoodOrder item={item} key={item.food._id} ingredients={ingredients}/>
-                                </div>
                             ))}
                             <div style={{borderTop:'1px solid #e1e1e1'}}
                             className="d-flex w-100 align-items-center justify-content-end p-3">
@@ -78,17 +76,15 @@ export default ()=>{
     )
 }
 
-const FoodOrder = ({item, ingredients})=>{
-    return (
-        <>
-            <img src={item.food.img==null?noimage:`data:image/jpeg;base64,${item.food.img.data}`}/>
-            <div className="flex-grow-1 p-3 d-flex flex-column">
-                <h5>{item.food.name}</h5>
-            </div>
-            <span className="p-3">
-                    {item.count} шт
-            </span>
-            <div className="p-3">{item.food.coast} руб</div>
-        </>
-    )
-}
+export async function getStaticProps(){
+    try{
+      const ftdata = await fetch({ query: '{foodtypes{_id name}}', variables: null });
+      const foodtypes = ftdata.data.data.foodtypes;
+      return {
+        props: {foodtypes}
+      }
+    }
+    catch(err){
+      console.log(err);
+    }
+  }

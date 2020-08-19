@@ -1,3 +1,4 @@
+// import '../styles/normalize.css'
 import '../styles/main.scss'
 import {AppContext} from '../context'
 import { useState, useEffect } from 'react'

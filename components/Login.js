@@ -37,7 +37,7 @@ const login = ({activate})=>{
                 >
                 {customer!=null && customer.get!=null && customer.get.name!=null?
                 <div className="dropdown">
-                    <span className="login" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span className="login" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <User className="top-header-icon mr-1" width="30" height="30"/>
                         <span className="d-none d-md-inline">{customer.get.name}</span>
                     </span>

@@ -1,3 +1,4 @@
+@import './normalize.css';
 @import 'bootstrap/scss/bootstrap.scss';
 @import './vars.scss';
 @import './animate.css';
@@ -25,10 +26,14 @@
         font-style: normal;
         }
 
+a{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
 body{
     color: $blue;
     font-family: Roboto;
-    background: url(/imgs/fon2.png);
+    background: url(../imgs/fon2.png);
 }
 .close:hover{
     border: none;

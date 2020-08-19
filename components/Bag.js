@@ -6,7 +6,7 @@ import Close from '../imgs/svg/close.svg';
 import Link from "next/link";
 
 const Bag = ()=>{
-    const {cart} = useContext(AppContext);
+    const {cart =[]} = useContext(AppContext);
     useEffect(()=>{
         if(window!=null){window.$(document).on('click', '.dropdown-menu', function (e) {
             e.stopPropagation();

@@ -6,9 +6,11 @@ import Clock from '../imgs/svg/clock.svg';
 import Menu from '../imgs/svg/menu.svg';
 import Link from 'next/link';
 import {AppContext} from '../context';
+import logo from '../imgs/logo.png';
+import logosm from '../imgs/logosm.png';
 
 const Header = ({foodtypes, drawer, setDrawer})=>{
-    const {cart} = useContext(AppContext);
+    const {cart = []} = useContext(AppContext);
     useEffect(()=>{
         window.onscroll = function() {myFunction()};
         var header = document.getElementById("header");
@@ -32,8 +34,8 @@ const Header = ({foodtypes, drawer, setDrawer})=>{
                 <div style={{display:'flex', alignItems:'flex-end', alignItems:'center'}}>
                     <Link href='/'>
                         <a>
-                            <img src='/imgs/logo.png' alt="" className="img-logo d-none d-sm-inline"/>
-                            <img src='/imgs/logosm.png' alt="" className="img-logo d-inline d-sm-none"/>
+                            <img src={logo} alt="" className="img-logo d-none d-sm-inline"/>
+                            <img src={logosm} alt="" className="img-logo d-inline d-sm-none"/>
                         </a>
                     </Link>
                 </div>
@@ -44,7 +46,7 @@ const Header = ({foodtypes, drawer, setDrawer})=>{
                     </div>
                     <div className="top-header-item">
                         <Clock className="top-header-icon mr-2 ml-md-2" width="20" height="20"/>
-                        <span>пн-вс с 9:00-22:00</span>
+                        <span>9:00-22:00</span>
                     </div>
                 </div>
                 <div style={{display:'flex', alignItems:'center'}}>
