@@ -41,12 +41,12 @@ const Header = ({foodtypes, drawer, setDrawer, menu, home})=>{
                     </Link>
                 </div>
                 <div className="d-none d-sm-flex flex-column flex-md-row ml-3">
-                    <div className="top-header-item mb-1 d-flex">
-                        <Phone className="top-header-icon mr-2" width="20" height="20"/>
+                    <div className="top-header-item d-flex align-items-center justify-content-center">
+                        <Phone className="top-header-icon mr-1" width="20" height="20"/>
                         <span>+7(901)701-55-01</span>
                     </div>
-                    <div className="top-header-item">
-                        <Clock className="top-header-icon mr-2 ml-md-2" width="20" height="20"/>
+                    <div className="top-header-item ml-2 d-flex align-items-center justify-content-center">
+                        <Clock className="top-header-icon mr-1" width="20" height="20"/>
                         <span>9:00-22:00</span>
                     </div>
                 </div>

@@ -26,7 +26,7 @@ const Drawer = ({drawer, setDrawer, foodtypes})=>{
                 </div>
                 <div className="top-header-item mt-2 d-flex">
                     <Clock className="top-header-icon mr-2 ml-lg-2" width="20" height="20"/>
-                    <span>пн-вс с 9:00-22:00</span>
+                    <span>9:00-22:00</span>
                 </div>
             </div>
         </div>
