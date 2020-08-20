@@ -38,7 +38,7 @@ export default ({foodtypes})=>{
     }, [accessToken])
     return(
         <>
-            <Layout foodtypes={[]}>
+            <Layout foodtypes={[]} menu={false} home={true}>
             <div className="container-xl">
                 {load?<h3>Загрузка...</h3>:<>
                 {orders.length==0 && load==false?

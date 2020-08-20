@@ -7,9 +7,11 @@ import Close from '../imgs/svg/close.svg';
 import Layout from '../components/layout';
 import {fetch} from '../usefull';
 import FoodOrder from '../components/FoodOrder';
+const loadGif = require('../imgs/load.gif');
 
 const Order = ()=>{
     const {cart = {get:[]}, customer} = useContext(AppContext);
+    const [err, setErr] = useState(false);
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
@@ -53,6 +55,25 @@ const Order = ()=>{
     }, [customer])
     const makeOrder = async ()=>{
         try{
+            let re = /^\+(7\d{10})$/;
+            var valid = re.test(phone);
+            console.log("VALID",valid);
+            if(!valid){
+                setErr('Неверный формат телефона! ');
+                return;
+            }
+            if(name==''){
+                setErr('Имя не должно быть пустым!');
+                return;
+            }
+            if(address==''){
+                setErr('Адрес не должен быть пустым!');
+                return;
+            }
+            if(cart.get.length==0){
+                setErr('Корзина не должна быть пустой!');
+                return;
+            }
             setLoad(true);
             const newCart = cart.get.map(item=>(
                 {food: item.food._id, count: item.count}
@@ -89,7 +110,7 @@ const Order = ()=>{
                 <title>Rio Pizza</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Layout foodtypes={[]}>
+            <Layout foodtypes={[]} menu={false} home={true}>
             <div className="container-xl">
                 {complite?
                 <div className="row paper m-2">
@@ -131,6 +152,7 @@ const Order = ()=>{
                         <input type="text" 
                         onChange={handlePhone} 
                         value={phone}
+                        placeholder="+79991112233"
                         className="form-control" aria-describedby="emailHelp"/>
                     </div>
                 </div>
@@ -174,12 +196,15 @@ const Order = ()=>{
                         onChange={handleComment} value={comment}
                         className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
                     </div>
+                    {err?<div className="alert alert-danger w-100 m-2" role="alert">
+                        {err}
+                    </div>:null}
                     <div className="d-flex justify-content-end w-100 mb-3 mr-3">
                         <span 
                         style={{width:'125px', height:'45px'}}
                         onClick={makeOrder}
                         className="btn cart-btn p-2 float-right">
-                        {load?<img src="./load.gif" alt="" style={{height:'30px'}}></img>:'Заказать'}    
+                        {load?<img src={loadGif} alt="" style={{height:'30px', width:'30px'}}></img>:'Заказать'}    
                         </span>
                     </div>
                 </div>
@@ -237,60 +262,6 @@ const FoodOrderCart = ({item, i})=>{
                 </div>
             </div>
         </div>
-    )
-}
-
-const Food = ({item, i})=>{
-    const {cart} = useContext(AppContext);
-    return (
-        <>
-            <img src={item.food.img==null?noimage:`data:image/jpeg;base64,${item.food.img.data}`}/>
-            <div className="flex-grow-1 p-3 d-flex flex-column">
-                <h5>{item.food.name}</h5>
-                <div className="d-flex">
-                Состав: {item.food.ingredients.map((i)=>{
-                    return (
-                        <>{i.name }</>
-                    )
-                })}
-                </div>
-            </div>
-            <span className="p-3">
-                <div className="plus-minus mr-1"
-                    onClick={()=>{
-                        const updated = [...cart.get];
-                        if(cart.get[i].count==1){
-                            updated.splice(i, 1);
-                        }else{
-                            updated[i] = {food: item.food, count: cart.get[i].count-1}
-                        }
-                        cart.set([...updated]);
-                    }}
-                >-</div> 
-                    {item.count} шт
-                <div className="plus-minus ml-1 mr-1"
-                    onClick={()=>{
-                        const updated = [...cart.get];
-                        updated[i] = {food: item.food, count: cart.get[i].count+1}
-                        cart.set([...updated]);
-                    }}
-                >+</div>
-            </span>
-            <div className="p-3">{item.food.coast*item.count} руб</div>
-            <span style={{cursor:"pointer"}} className="p-3"
-            onClick={
-                ()=>{
-                    const cartIds = cart.get.map((item)=>(item._id));
-                    const index = cartIds.indexOf(item.food._id);
-                    const newCart = [...cart.get];
-                    newCart.splice(index, 1);
-                    cart.set(newCart);
-                }
-            }
-            >
-                <Close height="10" width="10" className="svg-img-del"/>
-            </span>
-        </>
     )
 }
 

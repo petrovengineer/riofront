@@ -4,12 +4,13 @@ import Login from './Login';
 import Phone from '../imgs/svg/phone.svg';
 import Clock from '../imgs/svg/clock.svg';
 import Menu from '../imgs/svg/menu.svg';
+import Home from '../imgs/svg/home.svg';
 import Link from 'next/link';
 import {AppContext} from '../context';
 import logo from '../imgs/logo.png';
 import logosm from '../imgs/logosm.png';
 
-const Header = ({foodtypes, drawer, setDrawer})=>{
+const Header = ({foodtypes, drawer, setDrawer, menu, home})=>{
     const {cart = []} = useContext(AppContext);
     useEffect(()=>{
         window.onscroll = function() {myFunction()};
@@ -55,11 +56,16 @@ const Header = ({foodtypes, drawer, setDrawer})=>{
                             <a href={`#${ft._id}`} key={ft._id}>{ft.name}</a>
                         ))}
                     </div>
+                    {home?
+                        <Link href="/">
+                            <Home width="32" height="32" className="top-header-icon menu mr-3 d-inline"/>
+                        </Link>                    
+                    :null}
                     <Login/>
                     {cart.get!=null?<Bag/>:null}
-                    <Menu width="30" height="30" className="top-header-icon menu ml-3 d-inline d-lg-none"
+                    {menu?<Menu width="30" height="30" className="top-header-icon menu ml-3 d-inline d-lg-none"
                         onClick={()=>setDrawer(!drawer)}
-                    />
+                    />:null}
                 </div>
             </div>
         </header>

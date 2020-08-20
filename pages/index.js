@@ -3,13 +3,14 @@ import Layout from '../components/layout'
 import {fetch} from '../usefull'
 import Banner from '../components/Banner'
 import List from '../components/List'
+import { urlObjectKeys } from 'next/dist/next-server/lib/utils'
 
 export default function Home({foodtypes}) {
   return (
     <>
       <Head>
         <title>Rio Pizza</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href={require('../imgs/favicon.ico')} />
       </Head>
       <Layout foodtypes={foodtypes}>
         <Banner/>
