@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import {AppContext} from '../context';
-import {ReactComponent as More} from '../imgs/more.svg';
+import {AppContext} from '../../context';
+import More from '../../imgs/more.svg';
 
 
 export default (props)=>{

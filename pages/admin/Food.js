@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import {ReactComponent as More} from '../imgs/more.svg';
+import More from '../../imgs/more.svg';
 import Input from './mini/Input';
 import DropCheck from './mini/DropCheck';
 import Dropdown from './mini/Dropdown';

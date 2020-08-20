@@ -1,4 +1,4 @@
-@import './vars.scss';
+@import '../vars.scss';
 
 .content{
     // overflow-y: scroll;
@@ -13,7 +13,7 @@
     }
   }
 
-#menu-toggle:checked ~ .content{
+.contentfull{
     @media (min-width: $md) {
         margin-left: 0;
         width: calc(100% - #{$drawer-width});

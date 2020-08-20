@@ -1,8 +1,12 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext, Component} from 'react';
 import axios from 'axios';
-import {ReactComponent as More} from '../imgs/more.svg';
+import More from '../../imgs/svg/more.svg';
+import Layout from '../../components/admin/Layout';
+import {AppContext} from '../../context';
+import {fetchREST} from '../../usefull';
 
-export default ()=>{
+const FoodTypes = ()=>{
+    const {accessToken} = useContext(AppContext);
     const [foodTypes, setFoodTypes] = useState([]);
     const [addField, showAddField] = useState(false);
     const [newType, setNewType] = useState('');
@@ -10,7 +14,8 @@ export default ()=>{
     const [edit, setEdit] = useState([]);
     const fetchFoodTypes = async ()=>{
         try{
-            const {data} = await axios.get('/foodtype');
+            console.log("FETCH")
+            const {data} = await fetchREST('/foodtype', 'get');
             setFoodTypes(data);
         }catch(err){
             console.log(err);
@@ -19,7 +24,8 @@ export default ()=>{
     const createFoodType = async()=>{
         try{
             setErr(false);
-            await axios.post('/foodtype', {name: newType})
+            await fetchREST('/foodtype', 'post', {name: newType});
+            // await axios.post('/foodtype', {name: newType})
             fetchFoodTypes();
         }catch(err){
             console.log(err);
@@ -31,7 +37,7 @@ export default ()=>{
     const changeFoodType = async(arg)=>{
         try{
             setErr(false);
-            await axios.put('/foodtype', arg);
+            await fetchREST('/foodtype', 'PUT', arg);
             closeEdit(arg._id);    
             fetchFoodTypes();
         }catch(err){
@@ -42,8 +48,7 @@ export default ()=>{
     const delFoodType = async(id)=>{
         try{
             setErr(false);
-            await axios.delete(`/foodtype?id=${id}`);
-            console.log('Done')
+            await fetchREST('/foodtype', 'delete', id);
             fetchFoodTypes();
         }
         catch(err){
@@ -62,10 +67,16 @@ export default ()=>{
         setEdit(newEdit); 
     }
     useEffect(()=>{
-        fetchFoodTypes();
+        // if(accessToken!=null){
+            // console.log(accessToken);
+            // axios.defaults.baseURL = process.env.NEXT_PUBLIC_OLD_API;
+            // axios.defaults.headers.common['Authorization'] = 'Bearer '+accessToken.get;
+            // axios.defaults.headers.post['Content-Type'] = 'application/json';
+            fetchFoodTypes();
+        // }
     }, []);
     return (
-        <>
+        <Layout>
             {addField?
             <div style={{display:'flex'}}>
                 <input type="text" className="form-control" 
@@ -114,6 +125,40 @@ export default ()=>{
                     ))}
                 </tbody>
             </table>
-        </>
+        </Layout>
     )
 }
+
+export default FoodTypes;
+// class Token extends Component{
+//     constructor(props){
+//         super(props);
+//     }
+//     render(){
+//         return this.props.render("123123123123");
+//     }
+// }
+
+// const Token = (props)=>{
+//     const {accessToken} = useContext(AppContext);
+//     const [token, setToken] = useState(null);
+//     useEffect(()=>{
+//         console.log("AACCESS TOKEN",accessToken);
+//         setToken(accessToken);
+//     }, [accessToken])
+//     return props.render(token);
+// }
+
+// const WithToken = (props)=>{    
+//     const Component = props.component;
+//     return <Token render={
+//             (token)=>(<Component token={token}/>)
+//             }/>
+// }
+
+// export default ()=>{
+//     return <Token render={
+//             (token)=>(<FoodTypes token={token}/>)
+//             }/>
+// }
+

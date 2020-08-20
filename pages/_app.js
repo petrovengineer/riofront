@@ -1,4 +1,3 @@
-// import '../styles/normalize.css'
 import '../styles/main.scss'
 import {AppContext} from '../context'
 import { useState, useEffect } from 'react'
@@ -46,16 +45,33 @@ function MyApp({ Component, pageProps }) {
     }
   useEffect(()=>{
     for(var key in state){
-      state[key] = persist(key, state[key]);
+      if(state[key]==null || state[key].length==0){state[key] = persist(key, state[key]);}
       restore(key);
     }
-    axios.defaults.baseURL = process.env.API;
-    axios.defaults.headers.common['Authorization'] = 'Bearer '+state.accessToken.get;
-    axios.defaults.headers.post['Content-Type'] = 'application/json';
   }, [])
   useEffect(()=>{
-    console.log("CHANGE", state);
-  }, [state])
+    if(state.accessToken!=null){
+      axios.defaults.baseURL = process.env.API;
+      axios.interceptors.request.use(
+        config => {
+          if (!config.headers.Authorization) {
+            const token = JSON.parse(localStorage.getItem("accessToken"));
+            console.log("INTERCEPTOR")
+            if (token) {
+              config.headers.Authorization = `Bearer ${token}`;
+            }
+          }
+          return config;
+        },
+        error => Promise.reject(error)
+      );
+      // axios.defaults.headers.common['Authorization'] = 'Bearer '+state.accessToken.get;
+      axios.defaults.headers.post['Content-Type'] = 'application/json';
+    }
+  }, [state.accessToken])
+  // useEffect(()=>{
+  //   console.log("CHANGE", state);
+  // }, [state])
 
   return <AppContext.Provider value={state}>
           <Component {...pageProps} />

@@ -1,5 +1,5 @@
 import React, {useEffect, useContext, useState} from 'react'
-import Bag from './Bag';
+// import Bag from './Bag';
 import Login from './Login';
 import Phone from '../imgs/svg/phone.svg';
 import Clock from '../imgs/svg/clock.svg';
@@ -62,7 +62,7 @@ const Header = ({foodtypes, drawer, setDrawer, menu, home})=>{
                         </Link>                    
                     :null}
                     <Login/>
-                    {cart.get!=null?<Bag/>:null}
+                    {/* {cart.get!=null?<Bag/>:null} */}
                     {menu?<Menu width="30" height="30" className="top-header-icon menu ml-3 d-inline d-lg-none"
                         onClick={()=>setDrawer(!drawer)}
                     />:null}
