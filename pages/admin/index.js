@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import Stat from './Stat';
+import Food from './food';
 // import Users from './Users';
 import Layout from '../../components/admin/Layout';
 import axios from 'axios'
@@ -25,24 +26,9 @@ export default ()=>{
         // }
     }, [])
     return(
-        <div className="wrapper" style={wrapper}>
-                {/* <Router> */}
-                    <Layout>
-                        <Stat/>
-                        {/* <Switch> */}
-                            {/* <Route path='/users' component={Users}/> */}
-                            {/* <Route path='/customers' component={Customers}/> */}
-                            {/* <Route path='/admin/orders' component={Orders}/> */}
-                            {/* <Route path='/changes' component={Changes}/> */}
-                            {/* <Route path='/' component={Food}/> */}
-                            {/* <Route path='/ingredients' component={Ingredients}/> */}
-                            {/* <Route path='/ingtypes' component={IngTypes}/> */}
-                            {/* <Route path='/' component={FoodTypes}/> */}
-                            {/* <Route path='/admin' component={Orders}/> */}
-                        {/* </Switch> */}
-                    </Layout>
-                {/* </Router> */}
-        </div>
+        // <div className="wrapper" style={wrapper}>
+                        <Food/>
+        // </div>
     )
 }
 

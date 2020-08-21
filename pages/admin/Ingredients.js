@@ -1,9 +1,11 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import More from '../../imgs/more.svg';
-import Input from './mini/Input';
-import Dropdown from './mini/Dropdown';
-import Load from './mini/Load';
+import More from '../../imgs/svg/more.svg';
+import Input from '../../components/admin/Input';
+import Dropdown from '../../components/admin/Dropdown';
+import Load from '../../components/admin/Load';
+import {fetchREST} from '../../usefull';
+import Layout from '../../components/admin/Layout';
 
 export default ()=>{
     const [data, setData] = useState([]);
@@ -16,7 +18,7 @@ export default ()=>{
             try{
                 setErr(false);
                 setLoad(true);
-                const {data} = await axios.get('/ingredient');
+                const {data} = await fetchREST('/ingredient', 'get');
                 setLoad(false);
                 setData(data);
             }catch(err){
@@ -29,7 +31,7 @@ export default ()=>{
     const fetchTypes = async ()=>{
         return new Promise(async (done, fail)=>{
             try{
-                const {data} = await axios.get('/ingtype');
+                const {data} = await fetchREST('/ingtype', 'get');
                 setIngTypes(data);
                 done()
             }catch(err){
@@ -43,7 +45,7 @@ export default ()=>{
             try{
                 setErr(false);
                 console.log(args);
-                await axios.post('/ingredient', args)
+                await fetchREST('/ingredient','post', args)
                 fetch();
                 done();
             }catch(err){
@@ -57,7 +59,7 @@ export default ()=>{
         return new Promise(async(done, fail)=>{
             try{
                 setErr(false);
-                await axios.put('/ingredient', arg);
+                await fetchREST('/ingredient','put', arg);
                 closeEdit(arg._id);    
                 fetch();
                 done();
@@ -72,7 +74,7 @@ export default ()=>{
         return new Promise(async (done, fail)=>{
             try{
                 setErr(false);
-                await axios.delete(`/ingredient?_id=${id}`);
+                await fetchREST(`/ingredient`, 'delete', id);
                 fetch();
                 done();
             }
@@ -101,13 +103,14 @@ export default ()=>{
         fetchData();
     }, []);
     return (
-        <>
+        <Layout>
         {err?<div className="alert alert-danger mt-3">Ошибка! Обратитесь к администратору!</div>:null}
         <Load load={load}>
             {edit.indexOf('new')>=0?
                 <Input item={{_id: 'new', name: ''}}
                 mutate={()=>(create({name: document.getElementById('new').value}))}
-                close={()=>closeEdit('new')}/>
+                close={()=>closeEdit('new')}
+                />
                 :<button className="btn btn-success" onClick={()=>openEdit('new')}>
                     Создать
                 </button>}
@@ -127,7 +130,9 @@ export default ()=>{
                                 {edit.indexOf(item._id)>=0?
                                 <Input item={item} 
                                 mutate={()=>(change({_id:item._id, name: document.getElementById(item._id).value}))}
-                                close={()=>closeEdit(item._id)}/>
+                                close={()=>closeEdit(item._id)}
+                                param='name'
+                                />
                                 :<span onClick={()=>openEdit(item._id)}>{item.name}</span>}
                             </td>
                             <td>
@@ -151,6 +156,6 @@ export default ()=>{
                 </tbody>
             </table>
         </Load>
-        </>
+        </Layout>
     )
 }

@@ -15,8 +15,8 @@ export default ({children, drawer})=>{
                         width: 100%;
                         position: relative;
                         padding: 16px;
-                        overflow:'scroll';
-                        background:'white';
+                        overflow: scroll;
+                        background:white;
                         transition: all 0.2s ease-out;
                         display: inline-block;
                     }

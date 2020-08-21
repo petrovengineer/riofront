@@ -14,7 +14,7 @@ export default ({children, drawer, toggleDrawer})=>{
     },[])
     return (
         <>
-            <div className={styles.drawer} style={{height, left:drawer?'0':-'250'}}>
+            <div className={styles.drawer + ' d-flex flex-column'} style={{height, left:drawer?'0':-'250'}}>
                 <label htmlFor="menu-toggle" className={styles.navtoggle}
                     onClick={()=>toggleDrawer(!drawer)}
                 >
@@ -22,17 +22,21 @@ export default ({children, drawer, toggleDrawer})=>{
                     <span></span>
                     <span></span>
                 </label>
-                <Link href='/admin/foodtypes'>
-                    <div className="p-3">Типы продуктов</div>
+                <Link href='/admin/food'>
+                    <a className="p-3">Продукты</a>
                 </Link>
-                {/* <div className="dItem"><Link className={location.pathname==='/admin'?'active':''} to='/admin'>Статистика</Link></div>           */}
-                {/* <div className="dItem"><Link className={location.pathname==='/admin'?'active':''} to='/admin'>Заказы</Link></div>           */}
-                {/* <div className="dItem"><Link className={location.pathname==='/admin/food'?'active':''} to='/admin/food'>Продукты</Link></div>           */}
-                {/* <div className="dItem"><Link className={location.pathname==='/admin/ingredients'?'active':''} to='/admin/ingredients'>Ингредиенты</Link></div>           */}
-                {/* <div className="dItem"><Link className={location.pathname==='/admin/ingtypes'?'active':''} to='/admin/ingtypes'>Типы ингредиентов</Link></div>           */}
-                {/* <div className="dItem"><Link className={location.pathname==='/admin/foodtypes'?'active':''} to='/admin/foodtypes'>Типы продуктов</Link></div>           */}
-                {/* <div className="dItem"><Link className={location.pathname==='/admin/users'?'active':''} to='/admin/users'>Пользователи</Link></div>           */}
-                {/* <div className="dItem"><Link className={location.pathname==='/admin/customers'?'active':''} to='/admin/customers'>Покупатели</Link></div>           */}
+                <Link href='/admin/foodtypes'>
+                    <a className="p-3">Типы продуктов</a>
+                </Link>
+                <Link href='/admin/ingredients'>
+                    <a className="p-3">Ингредиенты</a>
+                </Link>
+                <Link href='/admin/ingtypes'>
+                    <a className="p-3">Типы ингредиентов</a>
+                </Link>
+                <Link href='/admin/params'>
+                    <a className="p-3">Параметры</a>
+                </Link>
                 {children}
             </div>
         </>

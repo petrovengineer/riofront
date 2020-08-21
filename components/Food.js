@@ -28,7 +28,7 @@ const Food = ({food, ings})=>{
         <div className=" food p-3">
             <img alt=""
             style={{borderRadius:'5px'}} 
-            src={food.img==null?noimage:`data:image/jpeg;base64,${food.img.data}`}/>
+            src={food.img.data==null?noimage:`data:image/jpeg;base64,${food.img.data}`}/>
             <div className="detail">
                 <p></p>
                 <span className="stars">

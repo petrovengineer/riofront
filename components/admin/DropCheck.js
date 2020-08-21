@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import Save from '../../imgs/save.svg';
-import {ReactComponent as Close} from '../../imgs/close.svg';
+import Save from '../../imgs/svg/save.svg';
+import Close from '../../imgs/svg/close.svg';
 
 export default ({item, actions, vars, k1, k2, close, filter})=>{
     const [load, setLoad] = useState(false);

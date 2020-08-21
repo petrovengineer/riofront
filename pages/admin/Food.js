@@ -1,11 +1,13 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import More from '../../imgs/more.svg';
-import Input from './mini/Input';
-import DropCheck from './mini/DropCheck';
-import Dropdown from './mini/Dropdown';
-import Load from './mini/Load';
-import noimage from '../imgs/noimage.png';
+import More from '../../imgs/svg/more.svg';
+import Input from '../../components/admin/Input';
+import DropCheck from '../../components/admin/DropCheck';
+import Dropdown from '../../components/admin/Dropdown';
+import Load from '../../components/admin/Load';
+import noimage from '../../imgs/noimage.png';
+import Layout from '../../components/admin/Layout';
+import {fetchREST} from '../../usefull';
 
 export default ()=>{
     const [data, setData] = useState([]);
@@ -15,17 +17,12 @@ export default ()=>{
     const [err, setErr] = useState(false);
     const [edit, setEdit] = useState([]);
     const [load, setLoad] = useState(false);
-    const arrayBufferToBase64 = (buffer)=>{
-        var binary = '';
-        var bytes = [].slice.call(new Uint8Array(buffer));
-        bytes.forEach((b) => binary += String.fromCharCode(b));
-        return window.btoa(binary);
-    };
+
     const handleFile = (e, _id)=>{
         let file = e.target.files[0];
         let formData = new FormData();
         formData.append('file', file);
-        axios.post( `/food/upload?_id=${_id}`, formData,
+        axios.post(process.env.NEXT_PUBLIC_OLD_API + `/food/upload?_id=${_id}`, formData,
             { headers: {'Content-Type': 'multipart/form-data'}}
         ).then(function(){
             setErr(null)
@@ -41,7 +38,8 @@ export default ()=>{
             try{
                 setErr(false);
                 setLoad(true);
-                const {data} = await axios.get('/food');
+                const {data} = await fetchREST('/food', 'get');
+                console.log("DATA", data)
                 setData(data);
                 setLoad(false);
                 done(data)
@@ -56,7 +54,7 @@ export default ()=>{
     const fetchIngTypes = async ()=>{
         return new Promise(async (done, fail)=>{
             try{
-                const {data} = await axios.get('/ingtype');
+                const {data} = await fetchREST('/ingtype', 'get');
                 setIngTypes(data);
                 done(data);
             }catch(err){
@@ -68,7 +66,7 @@ export default ()=>{
     const fetchFoodTypes = async ()=>{
         return new Promise(async (done, fail)=>{
             try{
-                const {data} = await axios.get('/foodtype');
+                const {data} = await fetchREST('/foodtype', 'get');
                 setFoodTypes(data);
                 done();
             }catch(err){
@@ -80,7 +78,7 @@ export default ()=>{
     const fetchIngredients = async ()=>{
         return new Promise(async (done, fail)=>{
             try{
-                const {data} = await axios.get('/ingredient');
+                const {data} = await fetchREST('/ingredient', 'get');
                 setIngredients(data);
                 done();
             }catch(err){
@@ -93,7 +91,7 @@ export default ()=>{
         return new Promise(async(done, fail)=>{
             try{
                 setErr(false);
-                await axios.post('/food', args)
+                await fetchREST('/food','post', args)
                 setData(await fetch());
                 done();
             }catch(err){
@@ -107,7 +105,7 @@ export default ()=>{
         return new Promise(async(done, fail)=>{
             try{
                 setErr(false);
-                await axios.put('/food', arg);
+                await fetchREST('/food','put', arg);
                 closeEdit(arg._id);    
                 await fetch();
                 done();
@@ -122,7 +120,7 @@ export default ()=>{
         return new Promise(async (done, fail)=>{
             try{
                 setErr(false);
-                await axios.delete(`/food?_id=${id}`);
+                await fetchREST(`/food`, 'delete', id);
                 await fetch();
                 done();
             }
@@ -153,7 +151,7 @@ export default ()=>{
         fetchData();
     }, []);
     return (
-        <>
+        <Layout>
         {err?<div className="alert alert-danger mt-3">Ошибка! Обратитесь к администратору!</div>:null}
         <Load load={load}>
             {edit.indexOf('new')>=0?
@@ -179,9 +177,12 @@ export default ()=>{
                         <tr key={item._id}>
                             <td>
                                 {edit.indexOf(item._id)>=0?
-                                <Input item={item} 
-                                mutate={()=>(change({_id:item._id, name: document.getElementById(item._id).value}))}
-                                close={()=>closeEdit(item._id)}/>
+                                <Input 
+                                    item={item} 
+                                    mutate={()=>(change({_id:item._id, name: document.getElementById(item._id).value}))}
+                                    close={()=>closeEdit(item._id)}
+                                    param='name'
+                                />
                                 :<span onClick={()=>openEdit(item._id)}>{item.name}</span>}
                             </td>
                             {/* COAST */}
@@ -253,7 +254,7 @@ export default ()=>{
                             <td>
                                 <form >
                                     <label htmlFor={item._id} style={{cursor:'pointer'}}>
-                                        <img alt="" height="100" width="100" src={item.img==null?noimage:`data:image/jpeg;base64,${arrayBufferToBase64(item.img.data.data)}`}/>
+                                        <img alt="" height="100" width="100" src={item.img==null?noimage:`data:image/jpeg;base64,${item.img.data}`}/>
                                     </label>
                                     <input type="file" id={item._id} name="file" 
                                     onChange={(e)=>{handleFile(e, item._id)}} style={{display:'none'}}></input>
@@ -270,7 +271,7 @@ export default ()=>{
                 </tbody>
             </table>
         </Load>
-        </>
+        </Layout>
     )
 }
 

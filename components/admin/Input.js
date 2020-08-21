@@ -1,20 +1,21 @@
 import React, {useState} from 'react';
-import {ReactComponent as Save} from '../../imgs/save.svg';
-import {ReactComponent as Close} from '../../imgs/close.svg';
+import Save from '../../imgs/svg/save.svg';
+import Close from '../../imgs/svg/close.svg';
+import loadGIF from '../../imgs/load.gif';
 
 export default ({item, mutate, close, param})=>{
     const [load, setLoad] = useState(false);
     return (
         <div className="ing-name-input" style={{display: 'flex', position: 'relative'}}>
             <input className="form-control" id={item._id} defaultValue={item[param]}/>
-            {load?<img src="/load.gif" alt="" style={loadStyle}></img>:
+            {load?<img src={loadGIF} alt="" style={loadStyle}></img>:
             <span className="svg-save"><Save height="30" width="30" 
             onClick={async()=>{
                 try{
                     setLoad(true);
                     await mutate(); 
-                    // setLoad(false);
-                    // close();
+                    setLoad(false);
+                    close();
                 }
                 catch(err){
                     close();

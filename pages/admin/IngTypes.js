@@ -1,7 +1,10 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import {ReactComponent as More} from '../imgs/more.svg';
-import Input from './mini/Input';
+import More from '../../imgs/svg/more.svg';
+import Input from '../../components/admin/Input';
+import { fetchREST } from '../../usefull';
+import Layout from '../../components/admin/Layout';
+import Dropdown from '../../components/admin/Dropdown';
 
 export default ()=>{
     const [data, setData] = useState([]);
@@ -11,7 +14,7 @@ export default ()=>{
     const [edit, setEdit] = useState([]);
     const fetch = async ()=>{
         try{
-            const {data} = await axios.get('/ingtype');
+            const {data} = await fetchREST('/ingtype', 'get');
             setData(data);
         }catch(err){
             console.log(err);
@@ -20,7 +23,7 @@ export default ()=>{
     const create = async(args)=>{
         try{
             setErr(false);
-            await axios.post('/ingtype', args)
+            await fetchREST('/ingtype','post', args)
             fetch();
         }catch(err){
             console.log(err);
@@ -32,7 +35,7 @@ export default ()=>{
     const change = async(arg)=>{
         try{
             setErr(false);
-            await axios.put('/ingtype', arg);
+            await fetchREST('/ingtype','put', arg);
             closeEdit(arg._id);    
             fetch();
         }catch(err){
@@ -43,8 +46,7 @@ export default ()=>{
     const remove = async(id)=>{
         try{
             setErr(false);
-            await axios.delete(`/ingtype?_id=${id}`);
-            console.log('Done')
+            await fetchREST(`/ingtype`, 'delete', id);
             fetch();
         }
         catch(err){
@@ -66,7 +68,7 @@ export default ()=>{
         fetch();
     }, []);
     return (
-        <>
+        <Layout>
             {edit.indexOf('new')>=0?
             <Input item={{_id: 'new', name: ''}}
             mutate={()=>(create({name: document.getElementById('new').value}))}
@@ -74,20 +76,6 @@ export default ()=>{
             :<button className="btn btn-success" onClick={()=>openEdit('new')}>
                 Создать
             </button>}
-            {/* {addField?
-            <div style={{display:'flex'}}>
-                <input type="text" className="form-control" 
-                    onChange={(e)=>setNewItem(e.currentTarget.value)} value={newItem}/>
-                <button className="btn btn-success" 
-                    onClick={(e)=>create(e.target.value)}
-                    style={{marginLeft: '20px'}}>Создать</button>
-                <button className="btn btn-danger" 
-                    onClick={()=>showAddField(false)}
-                    style={{marginLeft: '20px'}}>Отмена</button>
-            </div>
-            :<button className="btn btn-success" onClick={()=>showAddField(true)}>
-                Создать
-            </button>} */}
             {err?<div className="alert alert-danger mt-3">Ошибка! Обратитесь к администратору!</div>:null}
             <table className="table" style={{marginTop:'20px'}}>
                 <tbody>
@@ -95,33 +83,24 @@ export default ()=>{
                         <tr key={item._id}>
                             <td>
                                 {edit.indexOf(item._id)>=0?
-                                <div style={{display: 'flex'}}>
-                                    <input className="form-control" id={item._id}/>
-                                    <button className="btn btn-success ml-3"
-                                    onClick={()=>{
-                                        change({_id:item._id, name: document.getElementById(item._id).value})
-                                    }}
-                                    >Сохранить</button>
-                                    <button className="btn btn-danger ml-3" onClick={()=>{closeEdit(item._id)}}>Отмена</button>
-                                </div>
-                                :item.name}
+                                <Input 
+                                    item={item} 
+                                    mutate={()=>(change({_id:item._id, name: document.getElementById(item._id).value}))}
+                                    close={()=>closeEdit(item._id)}
+                                    param='name'
+                                />
+                                :<span onClick={()=>openEdit(item._id)}>{item.name}</span>}
                             </td>
                             <td>
-                                <div className="dropdown">
-                                    <button className="btn" type="button" style={{boxShadow:'none', float:'right'}}
-                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <More height="20" width="20" style={{fill:'grey'}}/>
-                                    </button>
-                                    <div className="dropdown-menu dropdown-menu-right">
-                                        <a className="dropdown-item" href="/#" onClick={()=>openEdit(item._id)}>Изменить</a>
-                                        <a className="dropdown-item" href="/#" onClick={()=>remove(item._id)}>Удалить</a>
-                                    </div>
-                                </div>
+                                <Dropdown item={item} btn={<More height="20" width="20" style={{fill:'grey'}}/>}
+                                    actions={[()=>(remove(item._id))]} 
+                                    vars={[{_id:null, name:'Удалить', action: 0}]}
+                                />
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-        </>
+        </Layout>
     )
 }
