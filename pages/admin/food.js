@@ -11,6 +11,7 @@ import {fetchREST} from '../../usefull';
 
 export default ()=>{
     const [data, setData] = useState([]);
+    const [params, setParams] = useState([]);
     const [ingTypes, setIngTypes] = useState([]);
     const [foodTypes, setFoodTypes] = useState([]);
     const [ingredients, setIngredients] = useState([]);
@@ -47,6 +48,19 @@ export default ()=>{
                 console.log(err);
                 setLoad(false);
                 setErr(true);
+                fail();
+            }
+        })
+    }
+    const fetchParams = async ()=>{
+        return new Promise(async (done, fail)=>{
+            try{
+                const {data} = await fetchREST('/param', 'get');
+                console.log("PARAMS", data);
+                setParams(data);
+                done(data);
+            }catch(err){
+                console.log(err);
                 fail();
             }
         })
@@ -143,6 +157,7 @@ export default ()=>{
     }
     useEffect(()=>{
         async function fetchData(){
+            await fetchParams();
             await fetchIngTypes();
             await fetchFoodTypes();
             await fetchIngredients();
@@ -167,8 +182,9 @@ export default ()=>{
                         <th>Название</th>
                         <th>Цена</th>
                         <th>Тип продукта</th>
-                        <th>Ингредиенты</th>
                         <th>Типы ингредиентов</th>
+                        <th>Ингредиенты</th>
+                        <th>Параметры</th>
                         <th>Изображение</th>
                         <th></th>
                     </tr>
@@ -217,19 +233,6 @@ export default ()=>{
                                     {item.foodTypes.length===0?'Нет выбранных':null}
                                 </span>}
                             </td>
-                            {/* INGREDIENTS */}
-                            <td>
-                                {edit.indexOf(item._id+3)>=0?
-                                <DropCheck item={item.ingredients}
-                                filter={item.avIngTypes}
-                                actions={
-                                    ({ingredients})=>{
-                                    change({_id:item._id, ingredients})}
-                                } vars={ingredients} k1='ingredients'
-                                close={()=>closeEdit(item._id+3)}/>
-                                :<List item={item.ingredients} param='ingredients'
-                                list={ingredients} openEdit={()=>openEdit(item._id+3)}/>}
-                            </td>
                             {/* ING TYPES */}
                             <td>
                                 {edit.indexOf(item._id+1)>=0?
@@ -251,6 +254,42 @@ export default ()=>{
                                     {item.avIngTypes.length===0?'Нет выбранных':null}
                                 </span>}
                             </td>
+                            {/* INGREDIENTS */}
+                            <td>
+                                {edit.indexOf(item._id+3)>=0?
+                                <DropCheck item={item.ingredients}
+                                filter={item.avIngTypes}
+                                actions={
+                                    ({ingredients})=>{
+                                    change({_id:item._id, ingredients})}
+                                } vars={ingredients} k1='ingredients'
+                                close={()=>closeEdit(item._id+3)}/>
+                                :<List item={item.ingredients} param='ingredients'
+                                list={ingredients} openEdit={()=>openEdit(item._id+3)}/>}
+                            </td>
+                            {/*  =====PARAMS==========*/}
+                            <td>
+                                {edit.indexOf(item._id+6)>=0?
+                                <DropCheck item={item.params} 
+                                actions={({params})=>change({_id: item._id, params})} 
+                                vars={params} k1='params'
+                                close={()=>closeEdit(item._id+6)}/>
+                                :<span onClick={()=>openEdit(item._id+6)}>
+                                    {item.params!=null?item.params.map(
+                                        (p)=>{
+                                            const index = params.map(i=>i._id).indexOf(p);
+                                            return (
+                                                    <span key={p}>{
+                                                        params[index]==null?
+                                                        <span style={{color:'red'}}>Удалено</span>
+                                                        :params[index].name+' '}
+                                                    </span>
+                                                )
+                                            }):null}
+                                    {item.params!=null?item.params.length===0?'Нет выбранных':null:'Нет выбранных'}
+                                </span>}
+                            </td>
+                            {/* ======UPLOAD IMAGE=============== */}
                             <td>
                                 <form >
                                     <label htmlFor={item._id} style={{cursor:'pointer'}}>
@@ -260,6 +299,7 @@ export default ()=>{
                                     onChange={(e)=>{handleFile(e, item._id)}} style={{display:'none'}}></input>
                                 </form>
                             </td>
+                            {/* ====MENU=========== */}
                             <td>
                                 <Dropdown item={item} btn={<More height="20" width="20" style={{fill:'grey'}}/>}
                                 actions={[()=>(remove(item._id))]} 

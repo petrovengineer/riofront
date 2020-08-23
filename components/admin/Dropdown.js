@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
+import loadGIF from '../../imgs/load.gif';
 
 export default ({item, actions, vars, k1, k2, btn})=>{
     const [load, setLoad] = useState(false);
     return (
         <div className="dropdown">
-            {load?<img src="/load.gif" alt="" style={loadStyle}></img>:<button className="btn" type="button" 
+            {load?<img src={loadGIF} alt="" style={loadStyle}></img>:<button className="btn" type="button" 
             style={{boxShadow:'none', padding:0}}
             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {btn}

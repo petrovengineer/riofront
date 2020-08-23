@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import Save from '../../imgs/svg/save.svg';
 import Close from '../../imgs/svg/close.svg';
+import loadGIF from '../../imgs/load.gif';
 
-export default ({item, actions, vars, k1, k2, close, filter})=>{
+export default ({item=[], actions, vars, k1, k2, close, filter})=>{
+    console.log("ITEM", item);
     const [load, setLoad] = useState(false);
     const varsId = vars.map((v)=>(v._id));
     const [glob, setGlob] = useState(item);
@@ -49,7 +51,7 @@ export default ({item, actions, vars, k1, k2, close, filter})=>{
             )})}
             <div style={{display:'flex', justifyContent:'flex-end', padding:'10px'}} 
             className="list-group-item list-group-item-action">
-                {load?<img src="/load.gif" alt="" style={loadStyle}></img>:
+                {load?<img src={loadGIF} alt="" style={loadStyle}></img>:
                 <span className="svg-save" style={{marginRight:'10px'}}><Save height="30" width="30" 
                 onClick={async()=>{
                     try{

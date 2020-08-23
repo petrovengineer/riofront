@@ -40,7 +40,7 @@ export default ()=>{
             }
         })
     }
-    const create = (args)=>{
+        const create = (args)=>{
         return new Promise(async(done, fail)=>{
             try{
                 setErr(false);
@@ -58,6 +58,7 @@ export default ()=>{
     const change = async(arg)=>{
         return new Promise(async(done, fail)=>{
             try{
+                console.log("CHANGE", arg);
                 setErr(false);
                 await fetchREST('/ingredient','put', arg);
                 closeEdit(arg._id);    
@@ -118,6 +119,7 @@ export default ()=>{
                 <tbody>
                     <tr>
                         <th>Название</th>
+                        <th>Наценка</th>
                         <th>Наличие</th>
                         <th>Тип</th>
                         <th></th>
@@ -134,6 +136,14 @@ export default ()=>{
                                 param='name'
                                 />
                                 :<span onClick={()=>openEdit(item._id)}>{item.name}</span>}
+                            </td>
+                            <td>
+                                {edit.indexOf(item._id+4)>=0?
+                                <Input item={item} 
+                                mutate={()=>(change({_id:item._id, coast: document.getElementById(item._id).value}))}
+                                param='coast'
+                                close={()=>closeEdit(item._id+4)}/>
+                                :<span onClick={()=>openEdit(item._id+4)}>{item.coast?item.coast:'Не указана'}</span>}
                             </td>
                             <td>
                                 <Dropdown item={item} 
