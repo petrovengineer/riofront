@@ -3,8 +3,8 @@ import axios from 'axios';
 import {AppContext} from '../context';
 
 const FormLogin = ({close, activate})=>{
-    const [phone, changePhone] = useState('+79500424342');
-    const [password, changePassword] = useState('1212');
+    const [phone, changePhone] = useState('');
+    const [password, changePassword] = useState('');
     const [load, changeLoad] = useState(false);
     const [info, setInfo] = useState(null);
     const [err, chErr] = useState(null);

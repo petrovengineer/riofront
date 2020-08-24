@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import axios from 'axios';
 
 const FormReg = ()=>{
-    const [email, setEmail] = useState('0424342@mail.ru');
-    const [password1, setPassword1] = useState('1212');
-    const [password2, setPassword2] = useState('1212');
-    const [name, setName] = useState('Igor');
-    const [phone, setPhone] = useState('+79111231212');
-    const [address, setAddress] = useState('Moscow');
+    const [email, setEmail] = useState('');
+    const [password1, setPassword1] = useState('');
+    const [password2, setPassword2] = useState('');
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [address, setAddress] = useState('');
     const [load, setLoad] = useState(false);
     const [err, setErr] = useState(null);
     const [info, setInfo] = useState(null);
