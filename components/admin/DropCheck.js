@@ -4,7 +4,6 @@ import Close from '../../imgs/svg/close.svg';
 import loadGIF from '../../imgs/load.gif';
 
 export default ({item=[], actions, vars, k1, k2, close, filter})=>{
-    console.log("ITEM", item);
     const [load, setLoad] = useState(false);
     const varsId = vars.map((v)=>(v._id));
     const [glob, setGlob] = useState(item);

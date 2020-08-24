@@ -44,7 +44,6 @@ const Order = ()=>{
         setComment(e.currentTarget.value);
     }
     useEffect(()=>{
-        console.log("CUSTOMER ORDER", customer)
         if(customer!=null && customer.get!=null){
             setName(customer.get.name);
             setPhone(customer.get.phone);
@@ -57,7 +56,6 @@ const Order = ()=>{
         try{
             let re = /^\+(7\d{10})$/;
             var valid = re.test(phone);
-            console.log("VALID",valid);
             if(!valid){
                 setErr('Неверный формат телефона! ');
                 return;
@@ -93,14 +91,11 @@ const Order = ()=>{
                   variables:{input: payload},
                 });
             setLoad(false);
-            console.log(newOrder.data.data.makeOrder);
-            // if(customer.get==null)customer.set({_id:data.customer});
             cart.set([]);
             setOrder(newOrder.data.data.makeOrder);
             setComplite(true);
         }catch(err){
             setLoad(false);
-
             console.log(err);
         }
     }

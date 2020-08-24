@@ -1,21 +1,24 @@
+import {useEffect, useRef, useState} from 'react';
 import Head from 'next/head'
 import Layout from '../components/layout'
 import {fetch} from '../usefull'
 import Banner from '../components/Banner'
 import List from '../components/List'
-import { urlObjectKeys } from 'next/dist/next-server/lib/utils'
 
 export default function Home({foodtypes, ingredients}) {
+    var refs = useRef({});
+    const [param, showParam] = useState(null);
   return (
     <>
       <Head>
         <title>Rio Pizza</title>
         <link rel="icon" href={require('../imgs/favicon.ico')} />
       </Head>
-      <Layout foodtypes={foodtypes}>
+      <Layout foodtypes={foodtypes} param={param} showParam={showParam} refs={refs}>
         <Banner/>
         {foodtypes.map((type)=>{
-          return type.food!=null?<List type={type} key={type._id} ingredients={ingredients}/>:null
+          return type.food!=null?
+          <List type={type} key={type._id} ingredients={ingredients} refs={refs} param={param} showParam={showParam}/>:null
         })}
       </Layout>
     </>

@@ -13,7 +13,6 @@ export default ({foodtypes})=>{
     const [load, setLoad] = useState(false);
     const fetchData = async ()=>{
         try{
-            console.log("FETCH DATA")
             setLoad(true);
             var orders = await fetch(
                 {
@@ -28,7 +27,6 @@ export default ({foodtypes})=>{
         }
     }
     useEffect(()=>{
-        console.log("ACCESS TOKEN", accessToken)
         if(accessToken!=null){
             axios.defaults.baseURL = process.env.API;
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken.get;
@@ -42,7 +40,7 @@ export default ({foodtypes})=>{
             <div className="container-xl">
                 {load?<h3>Загрузка...</h3>:<>
                 {orders.length==0 && load==false?
-                <div className="row">
+                <div className="row mt-4">
                     <h4 className="p-3">У вас пока нет ни одного заказа...</h4>
                     <Link href="/">
                             <span className="btn cart-btn p-2 m-3 float-left" style={{width:'155px', height:'45px'}}>На главную</span>

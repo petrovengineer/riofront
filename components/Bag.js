@@ -13,7 +13,6 @@ const Bag = ()=>{
           });}
     }, [])
     useEffect(()=>{
-        console.log("CART", cart)
     }, [cart])
     return (
         <div className="btn-group"  style={{zIndex:'900'}}>
@@ -64,7 +63,6 @@ const Bag = ()=>{
                             onClick={
                                 ()=>{
                                     const cartIds = cart.get.map((item)=>(item.food._id));
-                                    console.log(cartIds);
                                     const index = cartIds.indexOf(good.food._id);
                                     const newCart = [...cart.get];
                                     newCart.splice(index, 1);

@@ -44,7 +44,6 @@ export default ()=>{
         return new Promise(async(done, fail)=>{
             try{
                 setErr(false);
-                console.log(args);
                 await fetchREST('/ingredient','post', args)
                 fetch();
                 done();
@@ -58,7 +57,6 @@ export default ()=>{
     const change = async(arg)=>{
         return new Promise(async(done, fail)=>{
             try{
-                console.log("CHANGE", arg);
                 setErr(false);
                 await fetchREST('/ingredient','put', arg);
                 closeEdit(arg._id);    

@@ -15,19 +15,6 @@ export default (props)=>{
             console.log(err);
         }
     }
-    // const fetchEmail = async (id, i)=>{
-    //     try{
-    //         const {data} = await axios.get(`/user?customer=${id}`);
-    //         const user = data[0];
-    //         const newCustomers = [...customers];
-    //         if(user!=null){
-    //             newCustomers[i].email = user.email;
-    //         }else newCustomers[i].email = 'Не прекреплён'
-    //         setCustomers(newCustomers);
-    //     }catch(err){
-    //         console.log(err);
-    //     }
-    // }
     const delCustomer = async(id)=>{
         try{
             await axios.delete(`/customer?_id=${id}`);

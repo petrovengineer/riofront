@@ -69,22 +69,22 @@ const FormReg = ()=>{
                         </tr> */}
                         <tr>
                             <td><span className="input-group-text" id="basic-addon1">Имя</span></td>
-                            <td><input type="text" className="form-control" placeholder="Иван"
+                            <td><input type="text" className="form-control" 
                                 onChange={handleName} value={name}/></td>
                         </tr>
                         <tr>
                             <td><span className="input-group-text" id="basic-addon1">Телефон</span></td>
-                            <td> <input type="text" className="form-control" placeholder="+79011231212"
+                            <td> <input type="text" className="form-control" placeholder="+79991112233"
                                 onChange={handlePhone} value={phone}/></td>
                         </tr>
                         <tr>
                             <td><span className="input-group-text" id="basic-addon1">Пароль</span></td>
-                            <td><input type="password" className="form-control" placeholder="*******"
+                            <td><input type="password" className="form-control" 
                                 onChange={handlePassword1} value={password1}/></td>
                         </tr>
                         <tr>
                             <td><span className="input-group-text" id="basic-addon1">Повторите пароль</span></td>
-                            <td><input type="password" className="form-control" placeholder="*******"
+                            <td><input type="password" className="form-control" 
                                 onChange={handlePassword2} value={password2}/></td>
                         </tr>
                         {/* <tr>

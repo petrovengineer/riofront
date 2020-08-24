@@ -5,25 +5,10 @@ import FormLogin from './FormLogin';
 import FormReg from './FormReg';
 import {AppContext} from '../context';
 import Link from 'next/link';
+import Title from './Title';
 
-function Title(){
-    return(
-        <div style={{display:'flex', flexDirection:'column'}}>
-            <ul className="nav nav-tabs" id="myTab" role="tablist">
-                <li className="nav-item" role="presentation">
-                    <a className="nav-link active" id="home-tab" data-toggle="tab"
-                     href="#home" role="tab" aria-controls="home" aria-selected="true">Вход</a>
-                </li>
-                <li className="nav-item" role="presentation">
-                    <a className="nav-link" id="profile-tab" data-toggle="tab" 
-                    href="#profile" role="tab" aria-controls="profile" aria-selected="false">Регистрация</a>
-                </li>
-            </ul>
-        </div>
-    )
-}
-const login = ({activate})=>{
-    const [modal, toggleModal] = useState(false);
+
+const login = ({activate, toggleModal})=>{
     let loginModalRef = useRef();
     const context = useContext(AppContext);
     const {customer, accessToken, refreshToken} = context;
@@ -32,9 +17,7 @@ const login = ({activate})=>{
     },[activate])
     return(
         <>
-            <div className="top-header-item"
-                // style={{paddingLeft:'30px'}}
-                >
+            <div className="top-header-item">
                 {customer!=null && customer.get!=null && customer.get.name!=null?
                 <div className="dropdown">
                     <span className="login" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -51,16 +34,10 @@ const login = ({activate})=>{
                         className="dropdown-item" >Выход</span>
                     </div>
                 </div>
-                    :<span onClick={()=>{toggleModal(true); console.log(modal)}}>
+                    :<span onClick={()=>{toggleModal(true);}}>
                         <User className="top-header-icon mr-1" width="30" height="30"/>Войти</span>
                 }
             </div>
-            <Modal title={<Title/>} show={modal} modalRef={loginModalRef} refName="loginModalRef" close={()=>{toggleModal(false)}}>
-                    <div className="tab-content" id="myTabContent">
-                        <FormLogin activate={activate} close={()=>{toggleModal(false)}}/>
-                        <FormReg/>
-                    </div>
-            </Modal>
         </>
 
     )

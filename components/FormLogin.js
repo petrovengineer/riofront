@@ -10,9 +10,6 @@ const FormLogin = ({close, activate})=>{
     const [err, chErr] = useState(null);
     const context = useContext(AppContext);
     useEffect(()=>{
-        // console.log("CONTEXT", context);
-    }, [])
-    useEffect(()=>{
         if(activate){setInfo('Активация прошла успешно!')}
     }, [activate])
     const handlePhone = (e)=>{
@@ -55,7 +52,7 @@ const FormLogin = ({close, activate})=>{
                         <tr>
                             <td><span className="input-group-text">Номер телефона</span></td>
                             <td>
-                                <input type="text" className="form-control" placeholder="+71112223344" 
+                                <input type="text" className="form-control" placeholder="+79991112233" 
                                 // aria-label="Username" aria-describedby="basic-addon1"
                                 onChange={handlePhone}
                                 value={phone}
@@ -65,7 +62,7 @@ const FormLogin = ({close, activate})=>{
                         <tr>
                             <td><span className="input-group-text">Пароль</span></td>
                             <td>
-                                <input type="password" className="form-control" placeholder="*****" 
+                                <input type="password" className="form-control"
                                 // aria-label="Password" aria-describedby="basic-addon1"
                                 onChange={handlePassword}
                                 value={password}

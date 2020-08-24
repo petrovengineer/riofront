@@ -40,7 +40,6 @@ export default ()=>{
                 setErr(false);
                 setLoad(true);
                 const {data} = await fetchREST('/food', 'get');
-                console.log("DATA", data)
                 setData(data);
                 setLoad(false);
                 done(data)
@@ -56,7 +55,6 @@ export default ()=>{
         return new Promise(async (done, fail)=>{
             try{
                 const {data} = await fetchREST('/param', 'get');
-                console.log("PARAMS", data);
                 setParams(data);
                 done(data);
             }catch(err){

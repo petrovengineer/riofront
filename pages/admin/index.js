@@ -15,7 +15,6 @@ export default ()=>{
     // const {accessToken} = useContext(AppContext);
     useEffect(()=>{
         // if(accessToken!=null){
-            // console.log(accessToken);
             // axios.defaults.baseURL = process.env.NEXT_PUBLIC_OLD_API;
             // axios.defaults.headers.common['Authorization'] = 'Bearer '+accessToken.get;
             // axios.defaults.headers.post['Content-Type'] = 'application/json';

@@ -10,7 +10,7 @@ import {AppContext} from '../context';
 import logo from '../imgs/logo.png';
 import logosm from '../imgs/logosm.png';
 
-const Header = ({foodtypes, drawer, setDrawer, menu, home})=>{
+const Header = ({foodtypes, drawer, setDrawer, menu, home, toggleModal})=>{
     const {cart = []} = useContext(AppContext);
     useEffect(()=>{
         window.onscroll = function() {myFunction()};
@@ -61,7 +61,7 @@ const Header = ({foodtypes, drawer, setDrawer, menu, home})=>{
                             <Home width="32" height="32" className="top-header-icon menu mr-3 d-inline"/>
                         </Link>                    
                     :null}
-                    <Login/>
+                    <Login toggleModal={toggleModal}/>
                     {cart.get!=null?<Bag/>:null}
                     {menu?<Menu width="30" height="30" className="top-header-icon menu ml-3 d-inline d-lg-none"
                         onClick={()=>setDrawer(!drawer)}

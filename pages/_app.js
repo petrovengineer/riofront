@@ -56,7 +56,6 @@ function MyApp({ Component, pageProps }) {
         config => {
           if (!config.headers.Authorization) {
             const token = JSON.parse(localStorage.getItem("accessToken"));
-            console.log("INTERCEPTOR")
             if (token) {
               config.headers.Authorization = `Bearer ${token}`;
             }
@@ -69,9 +68,6 @@ function MyApp({ Component, pageProps }) {
       axios.defaults.headers.post['Content-Type'] = 'application/json';
     }
   }, [state.accessToken])
-  // useEffect(()=>{
-  //   console.log("CHANGE", state);
-  // }, [state])
 
   return <AppContext.Provider value={state}>
           <Component {...pageProps} />

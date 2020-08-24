@@ -16,7 +16,6 @@ const FoodTypes = ()=>{
     const [edit, setEdit] = useState([]);
     const fetchFoodTypes = async ()=>{
         try{
-            console.log("FETCH")
             const {data} = await fetchREST('/foodtype', 'get');
             setFoodTypes(data);
         }catch(err){
@@ -69,7 +68,6 @@ const FoodTypes = ()=>{
     }
     useEffect(()=>{
         // if(accessToken!=null){
-            // console.log(accessToken);
             // axios.defaults.baseURL = process.env.NEXT_PUBLIC_OLD_API;
             // axios.defaults.headers.common['Authorization'] = 'Bearer '+accessToken.get;
             // axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -148,7 +146,6 @@ export default FoodTypes;
 //     const {accessToken} = useContext(AppContext);
 //     const [token, setToken] = useState(null);
 //     useEffect(()=>{
-//         console.log("AACCESS TOKEN",accessToken);
 //         setToken(accessToken);
 //     }, [accessToken])
 //     return props.render(token);

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Check from '../imgs/svg/tick.svg';
 
 export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=>{
     const varsId = vars.map((v)=>(v._id));
@@ -6,6 +7,8 @@ export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=
     useEffect(()=>{
         setIngs(vars.filter(v=>glob.indexOf(v._id)>-1))
     }, [glob])
+    useEffect(()=>{
+    }, [])
     if(filter!=null){vars = vars.filter((v)=>(filter.indexOf(v.type._id)>-1));}
     return (
         <>
@@ -26,14 +29,17 @@ export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=
                                 }
                         }}
                         >
-                            <div>
-                            <span className="check mr-1">{active?'☑':'☐'}</span>
-                            <span>{v.name}</span>
+                            <div className="d-flex">
+                                <div className="check mr-1" style={{minWidth:'16px'}}>
+                                    {active?<Check width="16" height="16"/>:''}
+                                </div>
+                                <span
+                                >{v.name}</span>
                             </div>
                             <span style={{color:'#BABCBF'}}>+{v.coast}руб</span>
                     </div>
             )})}
-            {item.filter((id)=>varsId.indexOf(id)<0).map((d)=>{
+            {/* {item.filter((id)=>varsId.indexOf(id)<0).map((d)=>{
                 return (
                     <div
                         onClick={async ()=>{
@@ -48,14 +54,13 @@ export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=
                         className="list-group-item list-group-item-action" style={{color:'red', cursor:'pointer'}}>
                             Удалено
                     </div>
-            )})}
+            )})} */}
         </div>
         <style jsx>
         {
             `
             .check{
                 fill:green;
-                font-size:18px;
             }
             
             `

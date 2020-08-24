@@ -37,7 +37,6 @@ const Params = ()=>{
     }
     const changeParam = async(arg)=>{
         try{
-            console.log("PARAM", arg)
             setErr(false);
             await fetchREST('/param', 'put', arg);
             closeEdit(arg._id);    
@@ -70,7 +69,6 @@ const Params = ()=>{
     }
     useEffect(()=>{
         // if(accessToken!=null){
-            // console.log(accessToken);
             // axios.defaults.baseURL = process.env.NEXT_PUBLIC_OLD_API;
             // axios.defaults.headers.common['Authorization'] = 'Bearer '+accessToken.get;
             // axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -112,7 +110,6 @@ const Params = ()=>{
                                     </button>
                                 }
                                 {param.list.map((l)=>{
-                                    console.log("PARAM LIST", l);
                                     return <div className="d-flex justify-content-center align-items-center m-2">
                                                 <span className="mr-2">{l.name}</span>
                                                 {edit.indexOf(l._id)>=0?

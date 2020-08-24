@@ -11,7 +11,6 @@ export default ()=>{
     const fetch = async ()=>{
         try{
             const {data} = await axios.get('/order');
-            console.log(data);
             setData(data);
         }catch(err){
             console.log(err);
@@ -44,7 +43,6 @@ export default ()=>{
         try{
             setErr(false);
             await axios.delete(`/order?_id=${id}`);
-            console.log('Done')
             fetch();
         }
         catch(err){
