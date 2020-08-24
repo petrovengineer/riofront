@@ -1,10 +1,7 @@
 import React, { useEffect, useContext } from 'react';
-import Stat from './Stat';
 import Food from './food';
 // import Users from './Users';
-import Layout from '../../components/admin/Layout';
-import axios from 'axios'
-import {AppContext} from '../../context';
+// import Layout from '../../components/admin/Layout';
 // import FoodTypes from './FoodTypes'
 // import Food from './Food'
 // import IngTypes from './IngTypes'

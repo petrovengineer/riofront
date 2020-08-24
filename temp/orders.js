@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import {ReactComponent as More} from '../imgs/more.svg';
+import More from '../../imgs/svg/more.svg';
 
 export default ()=>{
     const [data, setData] = useState([]);
