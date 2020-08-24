@@ -43,14 +43,16 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
     }
     return(
         // <div className="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
-            <div className=" food p-3" >
-                <img alt=""
-                style={{borderRadius:'5px'}} 
-                src={food.img.data==null?noimage:`data:image/jpeg;base64,${food.img.data}`}/>
-                <div className="detail">
+            <div className=" food p-4" style={{position:'relative'}}>
+                <div className="d-flex flex-row justify-content-center" style={{alignItems:'center'}}>
+                    {!param?<img alt=""
+                        style={{borderRadius:'5px', width:'200px', height:'200px'}} 
+                        src={food.img.data==null?noimage:`data:image/jpeg;base64,${food.img.data}`}
+                    />:null}
+                </div>
+                <div className="detail animate__animated animate__fadeIn" id={'detail'+food._id}>
                     <p className="name mt-4" style={{fontSize: '18px', fontFamily: 'Rounds'}}>{food.name}</p>
-                    {(!drop&&param)||!param?<p className="eng" 
-                    style={{minHeight:'35px'}}
+                        {(!drop&&param)||!param?<p className="eng" 
                     >
                         {food.ingredients.map((i)=>' '+i.name)} 
                     </p>:null}
@@ -77,29 +79,32 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                             )
                         }):null}
                     </div>
-                    <hr/>
+                    <div style={{height:'66px', width:'100%'}}></div>
+                </div>
+                <div className="d-flex justify-content-between flex-column" style={{position:'absolute', bottom:'24px', width:'calc(100% - 48px)'}}>
                     {info.indexOf(food._id)>=0?<div className="alert alert-success mt-2 animate__animated animate__bounceIn" 
                     id={food._id}
-                    style={{position:'absolute', bottom:'70px', left:'8px', width:'calc(100% - 16px)', background:'#1964B0', color:'white'}}
+                    style={{position:'absolute', bottom:'60px', left:'0px', width:'calc(100% - 0px)', background:'#1964B0', color:'white'}}
                     role="alert">
                         Товар добавлен
                     </div>:''}
-                    <div className="d-flex justify-content-between">
-                        <span className="price">{amount} руб</span>
-                        {/* <span className="price">{food.coast} руб</span> */}
-                        {param?null:<div className="d-flex justify-content-between">
-                            <span className="btn param-btn"
-                                id={food._id}
-                                onClick={()=>showParam(food._id)}
-                            >Выбрать</span>
-                        </div>} 
-                        {param?<div className="d-flex justify-content-between">
+                    <hr style={{width:'100%'}}/>
+                    <div className="d-flex justify-content-between w-100">
+                        <div className="price">{amount} руб</div>
+                        {param?
                             <span className="btn"
                                 onClick={()=>{addToCart(food._id);}}
                             >Заказать</span>
-                        </div>:null}
-                    </div>              
-                </div>
+                        :
+                            <span className="btn param-btn"
+                                id={food._id}
+                                onClick={()=>{
+                                    showParam(food._id)
+                                }}
+                            >Выбрать</span>
+                        } 
+                    </div>
+                </div>  
             </div>
         // </div>
     )

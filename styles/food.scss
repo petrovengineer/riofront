@@ -6,6 +6,7 @@
     -moz-box-shadow: 0px 0px 5px 1px rgba(194,194,194,1);
     box-shadow: 0px 0px 5px 1px rgba(194,194,194,1);
     border-radius: 5px;
+    min-height: 450px;
     .stars{
         float: right;
     }
@@ -27,13 +28,17 @@
     }
     .price{
         font-weight: 800;
-        font-size: 20px;
+        font-size: 18px;
     }
     .name{
         font-weight: 800;
+        text-align: center;
     }
     .eng{
         font-size: 12px;
+        text-align: center;
         color: $red;
+        text-transform: uppercase;
+        min-height: 55px;
     }
 }
