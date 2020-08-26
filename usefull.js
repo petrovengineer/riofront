@@ -43,4 +43,12 @@ const fetchREST =  async (url, type, query)=>{
     })
 }
 
-export {fetch, fetchREST};
+const equalArrObj = (arr1, arr2, param)=>{
+    let arr1Ids = arr1.map(i=>i[param]);
+    let arr2Ids = arr2.map(i=>i[param]);
+    let less = arr1Ids.filter(ci=>arr2Ids.indexOf(ci)>-1).length==arr1Ids.length;
+    let more = arr2Ids.filter(ci=>arr1Ids.indexOf(ci)>-1).length==arr2Ids.length;
+    return less && more;
+}
+
+export {fetch, fetchREST, equalArrObj};

@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState, useRef}  from 'react';
 import noimage from '../imgs/noimage.png';
 import {AppContext} from '../context';
 import DropCheck from '../components/DropCheck';
+import {equalArrObj} from '../usefull';
 
 const Food = ({food, param, showParam, ingredients, handleParam})=>{
     const [info, showInfo] = useState([]);
@@ -9,7 +10,10 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
     const {cart} = useContext(AppContext);
     const [amount, setAmount] = useState(0);
     const [ings, setIngs] = useState(food.ingredients);
-    const [selected, setSelected] = useState(food.params.map(p=>({_id:p._id, name: p.list[0].name, coast: p.list[0].coast})));
+    const [selected, setSelected] = useState(food.params.map(p=>({_id:p._id, name: p.list[0].name, coast: p.list[0].coast, pname: p.name})));
+    useEffect(()=>{
+        console.log(selected);
+    }, [])
     useEffect(()=>{
         const ingamount = ings.reduce(
             (prev, i)=>{
@@ -21,45 +25,58 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
             },0)
         setAmount(food.coast+ingamount + pamount);
     }, [ings, selected])
+
     const addToCart = (id)=>{
         setTimeout(()=>showParam(null), 1000);
-        const index = cart.get.map((g)=>g.food._id).indexOf(food._id);
+        let index = -1;
+        const test = cart.get.find((c, i)=>{
+            if (c.food._id == food._id){
+            if(equalArrObj(c.ings, ings, '_id') && equalArrObj(c.selected, selected, 'name')){
+                    index = i
+                    return true;
+                }
+            }
+            return false;
+        });
         if(index>-1){
             const updated = [...cart.get];
-            updated[index] = {food, count: cart.get[index].count+1}
+            updated[index] = {food, count: cart.get[index].count+1, ings, selected, coast: amount}
             cart.set([...updated]);
         }else{
-            cart.set([...cart.get, {food, count: 1}]);
+            cart.set([...cart.get, {food, count: 1, ings, selected:[...selected], coast: amount}]);
         }
         showInfo([...info, id]);
         setTimeout(()=>{
-            // const el = document.getElementById(id);
-            // if(el!=null){document.getElementById(id).classList.add("animate__fadeOut")}else {return}
             const newInfo = [...info];
             newInfo.splice(newInfo.indexOf(id), 2);
-            // setTimeout(()=>showInfo(newInfo), 1000);
             showInfo(newInfo);
         }, 1000);
     }
+    
     return(
-        // <div className="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
             <div className=" food p-4" style={{position:'relative'}}>
                 <div className="d-flex flex-row justify-content-center" style={{alignItems:'center'}}>
-                    {!param?<img alt=""
+                    {!param?<img alt="" className={!param?'animate__animated animate__fadeIn':''}
                         style={{borderRadius:'5px', width:'200px', height:'200px'}} 
                         src={food.img.data==null?noimage:`data:image/jpeg;base64,${food.img.data}`}
                     />:null}
                 </div>
-                <div className="detail animate__animated animate__fadeIn" id={'detail'+food._id}>
+                <div id={'detail'+food._id}>
                     <p className="name mt-4" style={{fontSize: '18px', fontFamily: 'Rounds'}}>{food.name}</p>
-                        {(!drop&&param)||!param?<p className="eng" 
-                    >
-                        {food.ingredients.map((i)=>' '+i.name)} 
-                    </p>:null}
-                    {/* {param&&food.ingredients!=null&&food.ingredients.length>0?<div onClick={()=>setDrop(!drop)} className="mb-3"
-                    style={{cursor:'pointer'}}
-                    >Изменить ингредиенты</div>:null} */}
-                    {param&&drop?<DropCheck
+                    {(!drop&&param)||!param?
+                    <>
+                        <p className="eng" >
+                            {ings.map((i)=>' '+i.name)} 
+                            {/* <div className="" >
+                                {selected.map((s)=>' '+s.pname)} 
+                            </div> */}
+                        </p>
+
+                    </>
+                    :null}
+                    {param&&drop?
+                        <div className={param?'animate__animated animate__fadeIn animate__faster':''}>
+                        <DropCheck
                             ings={ings}
                             setIngs={setIngs}
                             item={food.ingredients.map(i=>i._id)}
@@ -71,11 +88,13 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                             vars={ingredients} 
                             k1='ingredients'
                             close={()=>setDrop(false)}
-                        />:null}
+                        /></div>:null}
                     <div>
                         {food.params&&param?food.params.map((p)=>{
                             return (
+                                <div className={param?'animate__animated animate__fadeIn animate__faster':''} key={p._id}>
                                 <Param param={p} selected={selected} setSelected={setSelected}/>
+                                </div>
                             )
                         }):null}
                     </div>
@@ -106,12 +125,12 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                     </div>
                 </div>  
             </div>
-        // </div>
     )
 }
 
 const Param = ({param, selected, setSelected})=>{
-    const [select, setSelect] = useState(param.list[0].name);
+    // const [select, setSelect] = useState(param.list[0].name);
+    const [select, setSelect] = useState(selected.find(s=>s._id==param._id).name);
     return (
         <div className="d-flex mb-1">
             <div className="w-50 d-flex ">
@@ -122,14 +141,18 @@ const Param = ({param, selected, setSelected})=>{
                     <div key={l._id}
                     className={'p-1 rounded'} 
                     onClick={()=>{
-                        setSelected(selected.map((s)=>{
-                            if(s._id==param._id){
-                                s.name = l.name;
-                                s.coast = l.coast;
-                                setSelect(l.name);
-                            }
-                            return s;
-                        }))}
+                            const newSelected = [...selected];
+                            setSelected(newSelected.map((s)=>{
+                                const newS = Object.assign({}, s);
+                                if(s._id==param._id){
+                                    newS.pname = param.name;
+                                    newS.name = l.name;
+                                    newS.coast = l.coast;
+                                    setSelect(l.name);
+                                }
+                                return newS;
+                            }))
+                        }
                     }
                     // onClick={()=>{setSelect(l.name)}}
                     style={l.name==select?{background:'#1964B0', color: 'white'}:{cursor:'pointer'}}
