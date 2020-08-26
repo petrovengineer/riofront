@@ -57,7 +57,7 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
             <div className=" food p-4" style={{position:'relative'}}>
                 <div className="d-flex flex-row justify-content-center" style={{alignItems:'center'}}>
                     {!param?<img alt="" 
-                        // className={!param?'animate__animated animate__fadeIn':''}
+                        className={!param?'animate__animated animate__fadeIn':''}
                         style={{borderRadius:'5px', width:'200px', height:'200px'}} 
                         src={food.img.data==null?noimage:`data:image/jpeg;base64,${food.img.data}`}
                     />:null}
