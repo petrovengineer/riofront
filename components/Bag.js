@@ -29,50 +29,55 @@ const Bag = ()=>{
                 {
                     cart.get.map((good, i)=>{
                     return (
-                        <div key={good.food._id}>
-                        <div  className="cart-item pb-2">
-                            <img alt="" 
-                                src={good.food.img==null?noimage:`data:image/jpeg;base64,${good.food.img.data}`} 
-                                width="50" height="50"/>
-                            <div className="pl-2 pr-2" style={{width:'200px'}}>
-                                <div>{good.food.name}</div>
-                                <span>
-                                    <div className="plus-minus mr-1"
-                                        onClick={()=>{
-                                            const updated = [...cart.get];
-                                            if(cart.get[i].count==1){
-                                                updated.splice(i, 1);
-                                            }else{
-                                                updated[i] = {food: good.food, count: cart.get[i].count-1}
-                                            }
-                                            cart.set([...updated]);
-                                        }}
-                                    >-</div> 
-                                        {good.count} шт
-                                    <div className="plus-minus ml-1 mr-1"
-                                        onClick={()=>{
-                                            const updated = [...cart.get];
-                                            updated[i] = {food: good.food, count: cart.get[i].count+1}
-                                            cart.set([...updated]);
-                                        }}
-                                    >+</div> 
-                                </span>
-                                <span className="pl-2">{good.food.coast*good.count} руб</span>
-                            </div>
-                            <span style={{cursor:"pointer"}}
-                            onClick={
-                                ()=>{
-                                    const cartIds = cart.get.map((item)=>(item.food._id));
-                                    const index = cartIds.indexOf(good.food._id);
-                                    const newCart = [...cart.get];
-                                    newCart.splice(index, 1);
-                                    cart.set(newCart);
+                        <div key={good.food._id+i} className="pb-2">
+                            <div  className="cart-item">
+                                <img alt="" 
+                                    src={good.food.img==null?noimage:`data:image/jpeg;base64,${good.food.img.data}`} 
+                                    width="50" height="50"/>
+                                <div className="pl-2 pr-2" style={{width:'200px'}}>
+                                    <div>{good.food.name}</div>
+                                    <span>
+                                        <div className="plus-minus mr-1"
+                                            onClick={()=>{
+                                                const updated = [...cart.get];
+                                                if(cart.get[i].count==1){
+                                                    updated.splice(i, 1);
+                                                }else{
+                                                    updated[i].count = cart.get[i].count-1;
+                                                }
+                                                cart.set([...updated]);
+                                            }}
+                                        >-</div> 
+                                            {good.count} шт
+                                        <div className="plus-minus ml-1 mr-1"
+                                            onClick={()=>{
+                                                const updated = [...cart.get];
+                                                updated[i].count = cart.get[i].count+1;
+                                                cart.set([...updated]);
+                                            }}
+                                        >+</div> 
+                                    </span>
+                                    <span className="pl-2">{good.food.coast*good.count} руб</span>
+                                </div>
+                                <span style={{cursor:"pointer"}}
+                                onClick={
+                                    ()=>{
+                                        const updated = [...cart.get];
+                                        cart.set(updated.filter((f,i2)=>(i2!=i)));
+                                    }
                                 }
-                            }
-                            >
-                                <Close height="10" width="10" className="svg-img-del"/>
-                            </span>
-                        </div>
+                                >
+                                    <Close height="10" width="10" className="svg-img-del"/>
+                                </span>
+                            </div>
+                            <div style={styles.detail}>
+                                    {good.ings.map(i=>(
+                                        <span>{i.name+' '}</span>
+                                    ))}
+                                    {good.selected.map(i=>(
+                                        <span>{i.pname+' '+i.name+' '}</span>
+                                    ))}
+                            </div>
                         </div>
                     )
                     })
@@ -90,6 +95,15 @@ const Bag = ()=>{
             </div>
         </div>
     )
+}
+
+const styles = {
+    detail:{
+        fontSize:'12px',
+        marginLeft: '58px',
+        color: 'DarkGray',
+        textTransform: 'lowercase'
+    }
 }
 
 export default Bag;
