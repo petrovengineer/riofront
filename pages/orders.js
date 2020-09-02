@@ -38,7 +38,7 @@ export default ({foodtypes})=>{
         <>
             <Layout foodtypes={[]} menu={false} home={true}>
             <div className="container-xl">
-                {load?<h3>Загрузка...</h3>:<>
+                {load?<h3 className="p-4">Загрузка...</h3>:<>
                 {orders.length==0 && load==false?
                 <div className="row mt-4">
                     <h4 className="p-3">У вас пока нет ни одного заказа...</h4>
