@@ -13,7 +13,7 @@ const Order = ()=>{
     const [err, setErr] = useState(false);
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
-    const [address, setAddress] = useState('test');
+    const [address, setAddress] = useState('');
     const [apnumber, setApnumber] = useState('');
     const [floor, setFloor] = useState('');
     const [pay, setPay] = useState('cash');

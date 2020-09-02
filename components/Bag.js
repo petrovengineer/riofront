@@ -22,7 +22,7 @@ const Bag = ()=>{
                     {cart.get.length>0?cart.get.map((g)=>g.count).reduce((a, v)=>a+v):0}
                 </div>
                 <div className="txt d-none d-md-inline">Корзина<br/><span>
-                    {cart.get.length>0?cart.get.map((g)=>g.food.coast*g.count).reduce((a, v)=>a+v):0} руб
+                    {cart.get.length>0?cart.get.map((g)=>g.coast*g.count).reduce((a, v)=>a+v):0} руб
                 </span></div>
             </div>
             <div className="dropdown-menu dropdown-menu-right p-3" style={{minWidth:'300px'}}>
