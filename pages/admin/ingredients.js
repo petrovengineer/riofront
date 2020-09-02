@@ -118,6 +118,7 @@ export default ()=>{
                     <tr>
                         <th>Название</th>
                         <th>Наценка</th>
+                        <th>Вес</th>
                         <th>Наличие</th>
                         <th>Тип</th>
                         <th></th>
@@ -142,6 +143,14 @@ export default ()=>{
                                 param='coast'
                                 close={()=>closeEdit(item._id+4)}/>
                                 :<span onClick={()=>openEdit(item._id+4)}>{item.coast?item.coast:'Не указана'}</span>}
+                            </td>
+                            <td>
+                                {edit.indexOf(item._id+5)>=0?
+                                <Input item={item} 
+                                mutate={()=>(change({_id:item._id, weight: document.getElementById(item._id).value}))}
+                                param='weight'
+                                close={()=>closeEdit(item._id+5)}/>
+                                :<span onClick={()=>openEdit(item._id+5)}>{item.weight?item.weight:'Не указан'}</span>}
                             </td>
                             <td>
                                 <Dropdown item={item} 
