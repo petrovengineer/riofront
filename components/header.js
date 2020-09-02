@@ -40,7 +40,7 @@ const Header = ({foodtypes, drawer, setDrawer, menu, home, toggleModal})=>{
                         </a>
                     </Link>
                 </div>
-                <div className="d-none d-sm-flex flex-column flex-md-row ml-3">
+                <div className="d-none d-sm-flex flex-column flex-lg-row ml-3">
                     <div className="top-header-item d-flex align-items-center justify-content-center">
                         <Phone className="top-header-icon mr-1" width="20" height="20"/>
                         <span>+7(901)701-55-01</span>
@@ -51,7 +51,7 @@ const Header = ({foodtypes, drawer, setDrawer, menu, home, toggleModal})=>{
                     </div>
                 </div>
                 <div style={{display:'flex', alignItems:'center'}}>
-                    <div className="inline-menu align-items-center d-none d-lg-flex">
+                    <div className="inline-menu align-items-center d-none d-xl-flex">
                         {foodtypes.map((ft)=>(
                             <a href={`#${ft._id}`} key={ft._id}>{ft.name}</a>
                         ))}
@@ -63,7 +63,7 @@ const Header = ({foodtypes, drawer, setDrawer, menu, home, toggleModal})=>{
                     :null}
                     <Login toggleModal={toggleModal}/>
                     {cart.get!=null?<Bag/>:null}
-                    {menu?<Menu width="30" height="30" className="top-header-icon menu ml-3 d-inline d-lg-none"
+                    {menu?<Menu width="30" height="30" className="top-header-icon menu ml-3 d-inline d-xl-none"
                         onClick={()=>setDrawer(!drawer)}
                     />:null}
                 </div>

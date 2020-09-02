@@ -116,6 +116,7 @@ export default ()=>{
     const change = async(arg)=>{
         return new Promise(async(done, fail)=>{
             try{
+                console.log("CHANGE", arg)
                 setErr(false);
                 await fetchREST('/food','put', arg);
                 closeEdit(arg._id);    
@@ -179,7 +180,9 @@ export default ()=>{
                     <tr>
                         <th>Название</th>
                         <th>Цена</th>
+                        <th>Вес</th>
                         <th>Тип продукта</th>
+                        <th>Состав</th>
                         <th>Типы ингредиентов</th>
                         <th>Ингредиенты</th>
                         <th>Параметры</th>
@@ -208,6 +211,15 @@ export default ()=>{
                                 close={()=>closeEdit(item._id+4)}/>
                                 :<span onClick={()=>openEdit(item._id+4)}>{item.coast?item.coast:'Не указана'}</span>}
                             </td>
+                            {/* WEIGHT */}
+                            <td>
+                                {edit.indexOf(item._id+8)>=0?
+                                <Input item={item} 
+                                mutate={()=>(change({_id:item._id, weight: document.getElementById(item._id).value}))}
+                                param='weight'
+                                close={()=>closeEdit(item._id+8)}/>
+                                :<span onClick={()=>openEdit(item._id+8)}>{item.weight?item.weight:'Не указан'}</span>}
+                            </td>
                             {/* FOOD TYPES */}
                             <td>
                                 {edit.indexOf(item._id+2)>=0?
@@ -230,6 +242,17 @@ export default ()=>{
                                             })}
                                     {item.foodTypes.length===0?'Нет выбранных':null}
                                 </span>}
+                            </td>
+                            {/* COMPOSITION */}
+                            <td>
+                                {edit.indexOf(item._id+7)>=0?
+                                <Input 
+                                    item={item} 
+                                    mutate={()=>{console.log("87687876"); change({_id:item._id, composition: document.getElementById(item._id).value})}}
+                                    close={()=>closeEdit(item._id+7)}
+                                    param='composition'
+                                />
+                                :<span onClick={()=>openEdit(item._id+7)}>{item.composition?item.composition:'Изменить'}</span>}
                             </td>
                             {/* ING TYPES */}
                             <td>
