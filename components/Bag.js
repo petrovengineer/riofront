@@ -32,7 +32,7 @@ const Bag = ()=>{
                         <div key={good.food._id+i} className="pb-2">
                             <div  className="cart-item">
                                 <img alt="" 
-                                    src={good.food.img==null?noimage:`data:image/jpeg;base64,${good.food.img.data}`} 
+                                    src={good.food.img.data==null?noimage:`data:image/jpeg;base64,${good.food.img.data}`} 
                                     width="50" height="50"/>
                                 <div className="pl-2 pr-2" style={{width:'200px'}}>
                                     <div>{good.food.name}</div>
@@ -57,7 +57,7 @@ const Bag = ()=>{
                                             }}
                                         >+</div> 
                                     </span>
-                                    <span className="pl-2">{good.food.coast*good.count} руб</span>
+                                    <span className="pl-2">{good.coast*good.count} руб</span>
                                 </div>
                                 <span style={{cursor:"pointer"}}
                                 onClick={
@@ -85,7 +85,7 @@ const Bag = ()=>{
                 {cart.get.length==0?<h6>В корзине пока пусто</h6>:null}
                 <div className="dropdown-divider"></div>
                 <span className="pb-2">
-                    Сумма: {cart.get.length>0?cart.get.map((g)=>g.food.coast*g.count).reduce((a, v)=>a+v):0} руб
+                    Сумма: {cart.get.length>0?cart.get.map((g)=>g.coast*g.count).reduce((a, v)=>a+v):0} руб
                 </span>
                 <Link href='/order'>
                 {cart.get.length==0?'':<span className="btn cart-btn p-2">

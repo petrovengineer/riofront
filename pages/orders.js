@@ -16,7 +16,7 @@ export default ({foodtypes})=>{
             setLoad(true);
             var orders = await fetch(
                 {
-                  query: "{orders{_id number cart{food{_id name img{data} coast} count}}}",
+                  query: "{orders{_id number cart{food{name composition coast} ingredients{name coast} selected{name pname coast} coast count}}}",
                   variables:null,
                 });
             setOrders(orders.data.data.orders);
@@ -50,10 +50,10 @@ export default ({foodtypes})=>{
                 {orders.map((order)=>{
                     return(
                         <div className="row paper m-2">
-                            <h4 className="pl-3 pt-3 w-100">
+                            <h4 className="pl-4 pt-4 w-100">
                                 Номер заказа: {order.number}
                             </h4>
-                            <h6 className="pl-3 pt-1">
+                            <h6 className="pl-4 pt-2">
                             Статус: {order.status==0?'ожидает подтверждения'
                                 :order.status==1?'готовится':order.status==2?'передан курьеру':'выполнен'}
                             </h6>
@@ -62,7 +62,7 @@ export default ({foodtypes})=>{
                             ))}
                             <div style={{borderTop:'1px solid #e1e1e1'}}
                             className="d-flex w-100 align-items-center justify-content-end p-3">
-                                <h4 className="order-amount">Итого: {order.cart.length>0?order.cart.map((g)=>g.food.coast*g.count).reduce((a, v)=>a+v):0} руб
+                                <h4 className="order-amount">Итого: {order.cart.length>0?order.cart.map((g)=>g.coast*g.count).reduce((a, v)=>a+v):0} руб
                                 </h4>
                             </div>
                         </div>

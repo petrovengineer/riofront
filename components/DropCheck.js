@@ -30,9 +30,11 @@ export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=
                         }}
                         >
                             <div className="d-flex">
-                                <div className="check mr-1" style={{minWidth:'16px'}}>
-                                    {active?<Check width="16" height="16"/>:''}
-                                </div>
+                                
+                                    {active?
+                                <div className="check mr-1" style={{minWidth:'16px'}}>    
+                                    <Check width="16" height="16"/></div>:''}
+                                
                                 <span
                                 >{v.name}</span>
                             </div>

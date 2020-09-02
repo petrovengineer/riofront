@@ -9,7 +9,7 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
     const [drop, setDrop] = useState(true);
     const {cart} = useContext(AppContext);
     const [amount, setAmount] = useState(0);
-    const [ings, setIngs] = useState(food.ingredients);
+    const [ings, setIngs] = useState([]);
     const [selected, setSelected] = useState(food.params.map(p=>({_id:p._id, name: p.list[0].name, coast: p.list[0].coast, pname: p.name})));
     useEffect(()=>{
         console.log(selected);
@@ -25,9 +25,15 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
             },0)
         setAmount(food.coast+ingamount + pamount);
     }, [ings, selected])
+    useEffect(()=>{
+        if(param==false || param==null){
+            setIngs([]);
+            setSelected(food.params.map(p=>({_id:p._id, name: p.list[0].name, coast: p.list[0].coast, pname: p.name})));
+        }
+    }, [param])
 
     const addToCart = (id)=>{
-        setTimeout(()=>showParam(null), 1000);
+        setTimeout(()=>{ showParam(null);}, 1000);
         let index = -1;
         const test = cart.get.find((c, i)=>{
             if (c.food._id == food._id){
@@ -67,19 +73,18 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                     {(!drop&&param)||!param?
                     <>
                         <p className="eng" >
-                            {ings.map((i)=>' '+i.name)} 
-                            {/* <div className="" >
-                                {selected.map((s)=>' '+s.pname)} 
-                            </div> */}
+                            {/* {ings.map((i)=>' '+i.name)}  */}
+                            {food.composition} 
                         </p>
-
+                        {food.weight!=0?<p className="food-weight" >
+                            {/* {ings.map((i)=>' '+i.name)}  */}
+                            Вес: {food.weight} гр.
+                        </p>:null}
                     </>
                     :null}
                     {param&&drop?
-                        <div 
-                        // className={param?'animate__animated animate__fadeIn animate__faster':''}
-                        >
-                        <DropCheck
+                        <div>
+                        {/* <DropCheck
                             ings={ings}
                             setIngs={setIngs}
                             item={food.ingredients.map(i=>i._id)}
@@ -91,7 +96,21 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                             vars={ingredients} 
                             k1='ingredients'
                             close={()=>setDrop(false)}
-                        /></div>:null}
+                        /> */}
+                            <DropCheck
+                                ings={ings}
+                                setIngs={setIngs}
+                                item={[]}
+                                // filter={} 
+                                actions={
+                                    ({ingredients})=>{
+                                    change({_id:food._id, ingredients})}
+                                } 
+                                vars={food.ingredients} 
+                                k1='ingredients'
+                                close={()=>setDrop(false)}
+                            />
+                        </div>:null}
                     <div>
                         {food.params&&param?food.params.map((p)=>{
                             return (

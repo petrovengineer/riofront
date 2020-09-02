@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import noimage from '../imgs/noimage.png';
 import {AppContext} from '../context';
 import { useContext } from 'react';
-import Close from '../imgs/svg/close.svg';
 import Layout from '../components/layout';
 import {fetch} from '../usefull';
 import FoodOrder from '../components/FoodOrder';
+import FoodOrderCart from '../components/FoodOrderCart';
 const loadGif = require('../imgs/load.gif');
 
 const Order = ()=>{
@@ -14,7 +13,7 @@ const Order = ()=>{
     const [err, setErr] = useState(false);
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
-    const [address, setAddress] = useState('');
+    const [address, setAddress] = useState('test');
     const [apnumber, setApnumber] = useState('');
     const [floor, setFloor] = useState('');
     const [pay, setPay] = useState('cash');
@@ -74,7 +73,13 @@ const Order = ()=>{
             }
             setLoad(true);
             const newCart = cart.get.map(item=>(
-                {food: item.food._id, count: item.count}
+                {
+                    food: item.food._id, 
+                    count: item.count,
+                    coast: item.coast,
+                    ingredients: item.ings.map(i=>(i._id)),
+                    selected: item.selected.map(s=>({_id:s._id, name: s.name, pname: s.pname}))
+                }
             ))
             const payload = {
                 cart: newCart, 
@@ -87,8 +92,8 @@ const Order = ()=>{
             }
             var newOrder = await fetch(
                 {
-                  query: "mutation MakeOrder($input:OrderInputType){makeOrder(input:$input){_id number cart{food{_id img{data} name coast} count}}}",
-                  variables:{input: payload},
+                    query: 'mutation MakeOrder($input:OrderInputType){makeOrder(input:$input){_id number cart{food{name composition coast} ingredients{name coast} selected{name pname coast} coast count}}}',
+                    variables:{input: payload},
                 });
             setLoad(false);
             cart.set([]);
@@ -109,15 +114,14 @@ const Order = ()=>{
             <div className="container-xl">
                 {complite?
                 <div className="row paper m-2">
-                    <h4 className="pl-3 pt-3" style={{color: 'green'}}>Заказ успешно оформлен! Номер заказа: 
-                    {order.number}
+                    <h4 className="pl-4 pt-4" style={{color: 'green'}}>Заказ успешно оформлен! Номер заказа: {order.number}
                     </h4>
                     {cart.get!=null?order.cart.map((item)=>(
-                            <FoodOrder item={item} key={item.food._id}/>
+                            <FoodOrder item={item} key={item._id}/>
                     )):null}
                     <div style={{borderTop:'1px solid #e1e1e1'}}
                     className="d-flex w-100 align-items-center justify-content-end p-3">
-                        <h4 className="order-amount">Итого: {order.cart.length>0?order.cart.map((g)=>g.food.coast*g.count).reduce((a, v)=>a+v):0} руб
+                        <h4 className="order-amount">Итого: {order.cart.length>0?order.cart.map((g)=>g.coast*g.count).reduce((a, v)=>a+v):0} руб
                         </h4>
                     </div>
                 </div>
@@ -129,7 +133,7 @@ const Order = ()=>{
                     <div style={{borderTop:'1px solid #e1e1e1'}}
                     className="d-flex w-100 align-items-center justify-content-end p-3">
                         <h4 className="order-amount">Итого: 
-                        {cart.get!=null?cart.get.length>0?cart.get.map((g)=>g.food.coast*g.count).reduce((a, v)=>a+v):0:null} руб
+                        {cart.get!=null?cart.get.length>0?cart.get.map((g)=>g.coast*g.count).reduce((a, v)=>a+v):0:null} руб
                         </h4>
                     </div>
                 </div>
@@ -206,57 +210,6 @@ const Order = ()=>{
                 </>}</div>
             </Layout>
         </>
-    )
-}
-
-const FoodOrderCart = ({item, i})=>{
-    const {cart} = useContext(AppContext);
-    return (
-        <div key={item._id} className="col-12 p-3 d-flex align-items-center justify-content-between flex-column flex-md-row"         >
-            <div className="d-flex flex-row justify-content-center justify-content-md-start" style={{alignItems:'center'}}>
-                <img className="p-2" src={item.food.img==null?noimage:`data:image/jpeg;base64,${item.food.img.data}`}/>
-            </div>
-            <div className="d-flex flex-column flex-md-row flex-grow-1 justify-content-center justify-content-md-between">
-                <span className="foc-name p-2 d-flex justify-content-center">{item.food.name}</span>
-                <div className="d-flex">
-                    <span className="p-2">
-                        <div className="plus-minus mr-1"
-                            onClick={()=>{
-                                const updated = [...cart.get];
-                                if(cart.get[i].count==1){
-                                    updated.splice(i, 1);
-                                }else{
-                                    updated[i] = {food: item.food, count: cart.get[i].count-1}
-                                }
-                                cart.set([...updated]);
-                            }}
-                        >-</div> 
-                            {item.count} шт
-                        <div className="plus-minus ml-1 mr-1"
-                            onClick={()=>{
-                                const updated = [...cart.get];
-                                updated[i] = {food: item.food, count: cart.get[i].count+1}
-                                cart.set([...updated]);
-                            }}
-                        >+</div>
-                    </span>
-                    <span className="p-2">{item.food.coast*item.count} руб</span>
-                    <span style={{cursor:"pointer"}} className="p-2"
-                    onClick={
-                        ()=>{
-                            const cartIds = cart.get.map((item)=>(item._id));
-                            const index = cartIds.indexOf(item.food._id);
-                            const newCart = [...cart.get];
-                            newCart.splice(index, 1);
-                            cart.set(newCart);
-                        }
-                    }
-                    >
-                        <Close height="10" width="10" className="svg-img-del"/>
-                    </span>
-                </div>
-            </div>
-        </div>
     )
 }
 
