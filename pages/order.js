@@ -21,6 +21,17 @@ const Order = ()=>{
     const [load, setLoad] = useState(false);
     const [complite, setComplite] = useState(false);
     const [order, setOrder] = useState(null);
+    const [city, setCity] = useState('');
+    const [help, showHelp] = useState(false);
+    const handleCity = (e)=>{
+        const value = e.currentTarget.value;
+        if(value.length>0 && !help){
+            showHelp(true);
+        }else if(value.length==0 && help){
+            showHelp(false);
+        }
+        setCity(value)
+    }
     const handleName = (e)=>{
         setName(e.currentTarget.value);
     }
@@ -63,6 +74,22 @@ const Order = ()=>{
                 setErr('Имя не должно быть пустым!');
                 return;
             }
+            if(city==''){
+                setErr('Город/Населённый пункт не должен быть пустым!');
+                return;
+            }
+            if(cities.map(c=>c.name).indexOf(city)===-1){
+                setErr('К сожалению мы не доставляем еду в этот населённый пункт!');
+                return;
+            }
+            const fullCity = cities[cities.map(c=>c.name).indexOf(city)];
+            const min = fullCity.min;
+            const amount = cart.get.map((g)=>g.coast*g.count).reduce((a, v)=>a+v);
+            if(amount<min)
+            {
+                setErr(`Минимальная сумма заказа для вашего населённого пункта ${fullCity.min} руб!`);
+                return;
+            }
             if(address==''){
                 setErr('Адрес не должен быть пустым!');
                 return;
@@ -71,6 +98,7 @@ const Order = ()=>{
                 setErr('Корзина не должна быть пустой!');
                 return;
             }
+            setErr(false);
             setLoad(true);
             const newCart = cart.get.map(item=>(
                 {
@@ -157,7 +185,29 @@ const Order = ()=>{
                 </div>
                 <div className="row paper m-2 row">
                     <h4 className="pl-3 pt-3 w-100">Доставка</h4>
-                    <div className="form-group col-12">
+                    <div className="form-group col-12 col-sm-6">
+                        <label >Город\Населенный пункт*</label>
+                        <input type="text" 
+                        onChange={handleCity} 
+                        value={city}
+                        className="form-control" aria-describedby="emailHelp"/>
+                            {help?
+                            <div class="dropdown-menu" style={{display:'block', left:'20px'}}>
+                                {
+                                    cities.filter(c=>c.name.indexOf(city.toUpperCase())>-1).map(
+                                        c=>(
+                                            <span 
+                                            style={{cursor: 'pointer'}}
+                                            onClick={(e)=>{setCity(c.name); showHelp(false)}}
+                                            className="dropdown-item" href="#">
+                                                {c.name}
+                                            </span>
+                                        ))
+                                }
+                            </div>
+                            :null}
+                    </div>
+                    <div className="form-group col-12 col-sm-6">
                         <label >Адрес*</label>
                         <input type="text" 
                         onChange={handleAddress} 
@@ -214,3 +264,83 @@ const Order = ()=>{
 }
 
 export default Order;
+
+const cities = [
+    {name:'ЧЕХОВ',
+    min:500},
+    {name:'МАНУШКИНО',
+    min:700},
+    {name:'ЧЕПЕЛЕВО',
+    min:700},
+    {name:'СОЛНЫШКОВО',
+    min:700},
+    {name:'СЕРГЕЕВО',
+    min:700},
+    {name:'РЕПНИКОВО',
+    min:700},
+    {name:'АЛАЧКОВО',
+    min:800},
+    {name:'ИВАЧКОВО',
+    min:800},
+    {name:'РУССКОЕ ПОЛЕ',
+    min:800},
+    {name:'НОВОСЕЛКИ',
+    min:800},
+    {name:'ГРИШЕНКИ',
+    min:800},
+    {name:'ДЕТКОВО',
+    min:800},
+    {name:'ЧУДИНОВО',
+    min:800},
+    {name:'ВОЛОСОВО',
+    min:1200},
+    {name:'СЕНИНО',
+    min:1200},
+    {name:'ЛЮБУЧАНЫ',
+    min:1200},
+    {name:'СТОЛБОВАЯ',
+    min:1200},
+    {name:'ПЛУЖКОВО',
+    min:1200},
+    {name:'ХЛЕВИНО',
+    min:1200},
+    {name:'БЕЛЯЕВО',
+    min:1200},
+    {name:'ДУБНА',
+    min:1200},
+    {name:'ВАСЬКИНО',
+    min:1200},
+    {name:'ИВАНОВСКОЕ',
+    min:1200},
+    {name:'КРЮКОВО',
+    min:1400},
+    {name:'МОЛОДИ',
+    min:1400},
+    {name:'ШАРАПОВО',
+    min:1400},
+    {name:'ВАУЛОВО',
+    min:1400},
+    {name:'ТРОИЦКОЕ',
+    min:1400},
+    {name:'БУЛЫЧЕВО',
+    min:1400},
+    {name:'МЕЩЕРСКОЕ',
+    min:1700},
+    {name:'НЕРАСТАННОЕ',
+    min:1700},
+    {name:'ПРОНИНО',
+    min:1700},
+    {name:'НОВЫЙ БЫТ',
+    min:1700},
+    {name:'СОЛОДОВКА',
+    min:1700},
+    {name:'СТРЕМИЛОВО',
+    min:1700},
+    {name:'ЧЕРНЕЦКОЕ',
+    min:1700},
+    {name:'ДОБРЫНИХА',
+    min:1700},
+    {name:'ТАЛАЛИХИНО',
+    min:1700},
+]
+

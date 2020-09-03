@@ -11,7 +11,7 @@ export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=
     if(filter!=null){vars = vars.filter((v)=>(filter.indexOf(v.type._id)>-1));}
     return (
         <>
-        <div className="list-group w-100 mb-3" style={{position:'relative'}}>
+        <div className="list-group w-100" style={{position:'relative'}}>
             {vars.map((v)=>{
                 const active = glob.indexOf(v._id)>-1;
                 return (
@@ -31,7 +31,7 @@ export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=
                         >
                             <div className="d-flex mr-2">
                                 {active?
-                                    <div className="check mr-1" style={{minWidth:'16px'}}>    
+                                    <div className="check mr-2" style={{minWidth:'16px'}}>    
                                         <Check width="16" height="16"/>
                                     </div>
                                 :''}

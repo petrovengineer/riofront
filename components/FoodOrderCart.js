@@ -17,7 +17,7 @@ const FoodOrderCart = ({item, i})=>{
                     {item.food.composition?
                     <div style={{textAlign:'center'}}>Состав: {item.food.composition}</div>:null}
                     {item.ings&& item.ings.length>0?
-                    <div style={{textAlign:'center'}}>Добавки: {item.ings.map(i=>(
+                    <div style={{textAlign:'center', width:'100%'}}>Добавки: {item.ings.map(i=>(
                         <span className="pr-1">{i.name}</span>
                     ))}</div>:null}
                     <div style={{textAlign:'center', width:'100%'}}>
@@ -27,7 +27,7 @@ const FoodOrderCart = ({item, i})=>{
                     </div>
                 </div>
                 <div className="d-flex justify-content-center">
-                    <span className="p-2">
+                    <span className="p-2" style={{minWidth:'120px'}}>
                         <div className="plus-minus mr-1"
                             onClick={()=>{
                                 const updated = [...cart.get];
@@ -48,7 +48,7 @@ const FoodOrderCart = ({item, i})=>{
                             }}
                         >+</div>
                     </span>
-                    <span className="p-2">{item.coast*item.count} руб</span>
+                    <span className="p-2" style={{minWidth:'100px'}}>{item.coast*item.count} руб</span>
                     <span style={{cursor:"pointer"}} className="p-2"
                     onClick={
                         ()=>{

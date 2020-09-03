@@ -4,6 +4,7 @@ import {AppContext} from '../context';
 import DropCheck from '../components/DropCheck';
 import {equalArrObj} from '../usefull';
 import Select from './Select';
+import Ruble from '../imgs/svg/coin.svg';
 
 const Food = ({food, param, showParam, ingredients, handleParam})=>{
     const [info, showInfo] = useState([]);
@@ -74,7 +75,7 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                     :null}
                 </div>
                 <div id={'detail'+food._id}>
-                    <p className="name mt-4 mb-2" style={{fontSize: '18px', fontFamily: 'Rounds'}}>{food.name}</p>
+                    <p className="name mt-4 mb-2" style={{fontSize: '16px', fontFamily: 'Rounds'}}>{food.name}</p>
                     {(!drop&&param)||!param?
                     <>
                         <p className="eng mb-0" >
@@ -87,7 +88,8 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                     </>
                     :null}
                     {param&&drop?
-                    <div className="d-flex flex-column mb-3">
+                    <div className="d-flex flex-column mb-3 mt-3">
+                        {food.avIngTypes.length>0?<span style={{fontWeight:'800'}} className="ml-2">Доп ингредиенты:</span>:null}
                         {food.avIngTypes.map(type=>(
                             <div class="btn-group dropright">
                             <div class="p-2 dropdown-toggle" 
@@ -114,7 +116,7 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                             </div>
                         ))
                     }</div>:null}
-                    <div>
+                    <div className="ml-2">
                         {food.params&&param?food.params.map((p)=>{
                             return (
                                 <div 
@@ -134,7 +136,10 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                     </div>:''}
                     <hr style={{width:'100%'}}/>
                     <div className="d-flex justify-content-between w-100 pl-2 pr-2 pb-1">
-                        <div className="price">{amount} руб</div>
+                        <div className="price d-flex align-items-center">
+                            {amount} 
+                            <Ruble className="ml-2 ruble" width="26" height="26"/>
+                        </div>
                         {param?
                             <span className="btn"
                                 onClick={()=>{addToCart(food._id);}}

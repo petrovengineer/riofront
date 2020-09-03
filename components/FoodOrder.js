@@ -9,7 +9,7 @@ const FoodOrder = ({item})=>{
             </div>
             <div className="d-flex flex-column flex-md-row flex-grow-1 justify-content-between">
                 <span className="p-2 foc-name">{item.food.name}</span>
-                <div className="d-flex flex-column align-items-center">
+                <div className="d-flex flex-column align-items-center" style={{maxWidth:'500px'}}>
                     {item.food.composition?
                     <div style={{textAlign:'center'}}>Состав: {item.food.composition}</div>:null}
                     {item.ingredients&& item.ingredients.length>0?<div>Добавки: {item.ingredients.map(i=>(
