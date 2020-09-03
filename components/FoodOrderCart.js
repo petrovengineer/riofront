@@ -6,24 +6,27 @@ import noimage from '../imgs/noimage.png';
 const FoodOrderCart = ({item, i})=>{
     const {cart} = useContext(AppContext);
     return (
-        <div key={item._id} className="col-12 p-3 d-flex align-items-center justify-content-between flex-column flex-md-row"         >
+        <div key={item._id} className="col-12 p-3 d-flex align-items-center justify-content-between flex-column flex-lg-row"         >
             <div className="d-flex flex-row justify-content-center justify-content-md-start" style={{alignItems:'center'}}>
                 <img className="p-2" src={item.food.img.data==null?noimage:`data:image/jpeg;base64,${item.food.img.data}`}/>
             </div>
-            <div className="d-flex flex-column flex-md-row flex-grow-1 justify-content-center justify-content-md-between">
-                <span className="foc-name p-2 d-flex justify-content-center">{item.food.name}</span>
-                <div className="d-flex flex-column align-items-center align-items-md-start">
-                    {item.food.composition?<div>Состав: {item.food.composition}</div>:null}
-                    {item.ings&& item.ings.length>0?<div>Добавки: {item.ings.map(i=>(
+            <div className="d-flex flex-column flex-lg-row flex-grow-1 justify-content-center justify-content-lg-between">
+                <span className="foc-name p-2 ml-3 align-items-center d-flex justify-content-center">{item.food.name}</span>
+                <div className="d-flex flex-column align-items-center align-items-lg-start justify-content-center" 
+                style={{maxWidth:'460px'}}>
+                    {item.food.composition?
+                    <div style={{textAlign:'center'}}>Состав: {item.food.composition}</div>:null}
+                    {item.ings&& item.ings.length>0?
+                    <div style={{textAlign:'center'}}>Добавки: {item.ings.map(i=>(
                         <span className="pr-1">{i.name}</span>
                     ))}</div>:null}
-                    <div>
+                    <div style={{textAlign:'center', width:'100%'}}>
                         {item.selected.map(i=>(
                             <span>{i.pname+' '+i.name+' '}</span>
                         ))}
                     </div>
                 </div>
-                <div className="d-flex">
+                <div className="d-flex justify-content-center">
                     <span className="p-2">
                         <div className="plus-minus mr-1"
                             onClick={()=>{

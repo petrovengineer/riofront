@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Check from '../imgs/svg/tick.svg';
-// import Select from './Select';
+import Select from './Select';
 
 export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=>{
     const varsId = vars.map((v)=>(v._id));
@@ -8,15 +8,17 @@ export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=
     useEffect(()=>{
         setIngs(vars.filter(v=>glob.indexOf(v._id)>-1))
     }, [glob])
+    useEffect(()=>{
+    }, [])
     if(filter!=null){vars = vars.filter((v)=>(filter.indexOf(v.type._id)>-1));}
     return (
         <>
         <div className="list-group w-100 mb-3" style={{position:'relative'}}>
-            {vars.map((v)=>{
+            <Select/>
+            {/* {vars.map((v)=>{
                 const active = glob.indexOf(v._id)>-1;
                 return (
-                    <div style={{cursor:'pointer'}} 
-                    className="dropdown-item d-flex justify-content-between align-items-center"
+                    <div style={{cursor:'pointer'}} className="border-bottom d-flex justify-content-between align-items-center"
                     key={v._id}
                         onClick={()=>{
                                 if(active){
@@ -29,7 +31,7 @@ export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=
                                 }
                         }}
                         >
-                            <div className="d-flex mr-2">
+                            <div className="d-flex">
                                 {active?
                                     <div className="check mr-1" style={{minWidth:'16px'}}>    
                                         <Check width="16" height="16"/>
@@ -39,8 +41,8 @@ export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=
                             </div>
                             <span style={{color:'#BABCBF'}}>+{v.coast}руб</span>
                     </div>
-            )})}
-            {item.filter((id)=>varsId.indexOf(id)<0).map((d)=>{
+            )})} */}
+            {/* {item.filter((id)=>varsId.indexOf(id)<0).map((d)=>{
                 return (
                     <div
                         onClick={async ()=>{
@@ -55,7 +57,7 @@ export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=
                         className="list-group-item list-group-item-action" style={{color:'red', cursor:'pointer'}}>
                             Удалено
                     </div>
-            )})}
+            )})} */}
         </div>
         <style jsx>
         {

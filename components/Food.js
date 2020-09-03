@@ -3,6 +3,7 @@ import noimage from '../imgs/noimage.png';
 import {AppContext} from '../context';
 import DropCheck from '../components/DropCheck';
 import {equalArrObj} from '../usefull';
+import Select from './Select';
 
 const Food = ({food, param, showParam, ingredients, handleParam})=>{
     const [info, showInfo] = useState([]);
@@ -12,7 +13,7 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
     const [ings, setIngs] = useState([]);
     const [selected, setSelected] = useState(food.params.map(p=>({_id:p._id, name: p.list[0].name, coast: p.list[0].coast, pname: p.name})));
     useEffect(()=>{
-        console.log(selected);
+        // console.log(food);
     }, [])
     useEffect(()=>{
         const ingamount = ings.reduce(
@@ -86,20 +87,33 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                     </>
                     :null}
                     {param&&drop?
-                            <DropCheck
-                                ings={ings}
-                                setIngs={setIngs}
-                                item={[]}
-                                // filter={} 
-                                actions={
-                                    ({ingredients})=>{
-                                    change({_id:food._id, ingredients})}
-                                } 
-                                vars={food.ingredients} 
-                                k1='ingredients'
-                                close={()=>setDrop(false)}
-                            />
-                        :null}
+                    <div className="d-flex flex-column mb-3">
+                        {food.avIngTypes.map(type=>(
+                            <div class="btn-group dropright">
+                            <div class="p-2 dropdown-toggle" 
+                            style={{cursor:'pointer'}}
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {type.name}
+                            </div>
+                            <div class="dropdown-menu">
+                                <DropCheck
+                                    // ings={ings}
+                                    setIngs={setIngs}
+                                    item={[]}
+                                    // filter={[type._id]} 
+                                    actions={
+                                        ({ingredients})=>{
+                                        change({_id:food._id, ingredients})}
+                                    } 
+                                    vars={food.ingredients.filter(i=>i.type?i.type._id==type._id:false)} 
+                                    k1='ingredients'
+                                    close={()=>setDrop(false)}
+                                />
+                                {/* <a class="dropdown-item" href="#">Action</a> */}
+                            </div>
+                            </div>
+                        ))
+                    }</div>:null}
                     <div>
                         {food.params&&param?food.params.map((p)=>{
                             return (
