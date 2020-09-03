@@ -23,7 +23,7 @@ export default ()=>{
         let file = e.target.files[0];
         let formData = new FormData();
         formData.append('file', file);
-        axios.post(process.env.NEXT_PUBLIC_OLD_API + `/food/upload?_id=${_id}`, formData,
+        axios.post(process.env.NEXT_PUBLIC_API + `/food/upload?_id=${_id}`, formData,
             { headers: {'Content-Type': 'multipart/form-data'}}
         ).then(function(){
             setErr(null)
