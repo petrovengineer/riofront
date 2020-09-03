@@ -13,7 +13,7 @@ export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=
     return (
         <>
         <div className="list-group w-100 mb-3" style={{position:'relative'}}>
-            {vars.map((v)=>{
+            {/* {vars.map((v)=>{
                 const active = glob.indexOf(v._id)>-1;
                 return (
                     <div style={{cursor:'pointer'}} className="border-bottom d-flex justify-content-between align-items-center"
@@ -30,17 +30,16 @@ export default ({item=[], actions, vars, k1, k2, close, filter, ings, setIngs})=
                         }}
                         >
                             <div className="d-flex">
-                                
-                                    {active?
-                                <div className="check mr-1" style={{minWidth:'16px'}}>    
-                                    <Check width="16" height="16"/></div>:''}
-                                
-                                <span
-                                >{v.name}</span>
+                                {active?
+                                    <div className="check mr-1" style={{minWidth:'16px'}}>    
+                                        <Check width="16" height="16"/>
+                                    </div>
+                                :''}
+                                <span>{v.name}</span>
                             </div>
                             <span style={{color:'#BABCBF'}}>+{v.coast}руб</span>
                     </div>
-            )})}
+            )})} */}
             {/* {item.filter((id)=>varsId.indexOf(id)<0).map((d)=>{
                 return (
                     <div

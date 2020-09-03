@@ -18,13 +18,15 @@
     }
     .btn{
         padding: 10px;
-        background-color: $yellow;
+        // background-color: $yellow;
+        border: 1px solid $yellow;
         color: $red;
-        font-family: Rounds;
+        // font-family: Rounds;
         float: right;
     }
     .btn:hover{
-        color: $blue;
+        // color: $blue;
+        background: $yellow;
     }
     .price{
         font-weight: 900;
