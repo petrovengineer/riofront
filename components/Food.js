@@ -60,13 +60,17 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
     }
     
     return(
-            <div className=" food p-4" style={{position:'relative'}}>
+            <div className="food p-2" style={{position:'relative'}}>
                 <div className="d-flex flex-row justify-content-center" style={{alignItems:'center'}}>
-                    {!param?<img alt="" 
-                        className={!param?'animate__animated animate__fadeIn':''}
-                        style={{borderRadius:'5px', width:'200px', height:'200px'}} 
-                        src={food.img.data==null?noimage:`data:image/jpeg;base64,${food.img.data}`}
-                    />:null}
+                    {!param?
+                    <>
+                        <div className="w-25"></div>
+                        <img alt="" className={!param?'animate__animated animate__fadeIn':''}
+                            src={food.img.data==null?noimage:`data:image/jpeg;base64,${food.img.data}`}
+                        />
+                        <div className="w-25"></div>
+                    </>
+                    :null}
                 </div>
                 <div id={'detail'+food._id}>
                     <p className="name mt-4" style={{fontSize: '18px', fontFamily: 'Rounds'}}>{food.name}</p>
@@ -84,19 +88,6 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                     :null}
                     {param&&drop?
                         <div>
-                        {/* <DropCheck
-                            ings={ings}
-                            setIngs={setIngs}
-                            item={food.ingredients.map(i=>i._id)}
-                            filter={food.avIngTypes.map(a=>a._id)} 
-                            actions={
-                                ({ingredients})=>{
-                                change({_id:food._id, ingredients})}
-                            } 
-                            vars={ingredients} 
-                            k1='ingredients'
-                            close={()=>setDrop(false)}
-                        /> */}
                             <DropCheck
                                 ings={ings}
                                 setIngs={setIngs}
