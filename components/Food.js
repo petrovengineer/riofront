@@ -60,7 +60,7 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
     }
     
     return(
-            <div className="food p-2" style={{position:'relative'}}>
+            <div className="food p-2 d-flex flex-column justify-content-between" style={{position:'relative'}}>
                 <div className="d-flex flex-row justify-content-center" style={{alignItems:'center'}}>
                     {!param?
                     <>
@@ -73,21 +73,19 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                     :null}
                 </div>
                 <div id={'detail'+food._id}>
-                    <p className="name mt-4" style={{fontSize: '18px', fontFamily: 'Rounds'}}>{food.name}</p>
+                    <p className="name mt-4 mb-2" style={{fontSize: '18px', fontFamily: 'Rounds'}}>{food.name}</p>
                     {(!drop&&param)||!param?
                     <>
-                        <p className="eng" >
-                            {/* {ings.map((i)=>' '+i.name)}  */}
+                        <p className="eng mb-0" >
                             {food.composition} 
                         </p>
-                        {food.weight!=0?<p className="food-weight" >
-                            {/* {ings.map((i)=>' '+i.name)}  */}
-                            Вес: {food.weight} гр.
-                        </p>:null}
+                        <p className="food-weight mb-0" >
+                        {food.weight!=0?
+                            <>Вес: {food.weight} гр.</>
+                        :null}</p>
                     </>
                     :null}
                     {param&&drop?
-                        <div>
                             <DropCheck
                                 ings={ings}
                                 setIngs={setIngs}
@@ -101,30 +99,27 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                                 k1='ingredients'
                                 close={()=>setDrop(false)}
                             />
-                        </div>:null}
+                        :null}
                     <div>
                         {food.params&&param?food.params.map((p)=>{
                             return (
                                 <div 
-                                // className={param?'animate__animated animate__fadeIn animate__faster':''} 
                                 key={p._id}>
                                 <Param param={p} selected={selected} setSelected={setSelected}/>
                                 </div>
                             )
                         }):null}
                     </div>
-                    <div style={{height:'66px', width:'100%'}}></div>
                 </div>
-                <div className="d-flex justify-content-between flex-column" style={{position:'absolute', bottom:'24px', width:'calc(100% - 48px)'}}>
+                <div className="d-flex justify-content-between flex-column">
                     {info.indexOf(food._id)>=0?<div 
                     className="alert alert-success mt-2 animate__animated animate__bounceIn" 
                     id={food._id}
-                    style={{position:'absolute', bottom:'60px', left:'0px', width:'calc(100% - 0px)', background:'#1964B0', color:'white'}}
                     role="alert">
                         Товар добавлен
                     </div>:''}
                     <hr style={{width:'100%'}}/>
-                    <div className="d-flex justify-content-between w-100">
+                    <div className="d-flex justify-content-between w-100 pl-2 pr-2 pb-1">
                         <div className="price">{amount} руб</div>
                         {param?
                             <span className="btn"
