@@ -13,9 +13,9 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
     const [amount, setAmount] = useState(0);
     const [ings, setIngs] = useState([]);
     const [selected, setSelected] = useState(food.params.map(p=>({_id:p._id, name: p.list[0].name, coast: p.list[0].coast, pname: p.name})));
-    useEffect(()=>{
-        // console.log(food);
-    }, [])
+    // useEffect(()=>{
+    //     console.log(ings);
+    // }, [ings])
     useEffect(()=>{
         const ingamount = ings.reduce(
             (prev, i)=>{
@@ -99,7 +99,7 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                             </div>
                             <div class="dropdown-menu">
                                 <DropCheck
-                                    // ings={ings}
+                                    ings={ings}
                                     setIngs={setIngs}
                                     item={[]}
                                     // filter={[type._id]} 
