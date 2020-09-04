@@ -160,8 +160,7 @@ const Order = ()=>{
                     )):null}
                     <div style={{borderTop:'1px solid #e1e1e1'}}
                     className="d-flex w-100 align-items-center justify-content-end p-3">
-                        <h4 className="order-amount">Итого: 
-                        {cart.get!=null?cart.get.length>0?cart.get.map((g)=>g.coast*g.count).reduce((a, v)=>a+v):0:null} руб
+                        <h4 className="order-amount">Итого: {cart.get!=null?cart.get.length>0?cart.get.map((g)=>g.coast*g.count).reduce((a, v)=>a+v):0:null} руб
                         </h4>
                     </div>
                 </div>

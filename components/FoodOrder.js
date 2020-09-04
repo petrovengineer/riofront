@@ -9,15 +9,16 @@ const FoodOrder = ({item})=>{
             </div>
             <div className="d-flex flex-column flex-md-row flex-grow-1 justify-content-between">
                 <span className="p-2 foc-name">{item.food.name}</span>
-                <div className="d-flex flex-column align-items-center" style={{maxWidth:'500px'}}>
+                <div className="order-info d-flex flex-column align-items-center" style={{maxWidth:'500px'}}>
                     {item.food.composition?
-                    <div style={{textAlign:'center'}}>Состав: {item.food.composition}</div>:null}
-                    {item.ingredients&& item.ingredients.length>0?<div>Добавки: {item.ingredients.map(i=>(
+                    <div style={{textAlign:'center'}}><div className="order-info-title">Состав: </div>{item.food.composition}</div>:null}
+                    {item.ingredients&& item.ingredients.length>0?
+                        <div><div className="order-info-title">Добавки:</div>{item.ingredients.map(i=>(
                         <span className="pr-1">{i.name}</span>
                     ))}</div>:null}
                     <div>
                         {item.selected.map(i=>(
-                            <span>{i.pname+' '+i.name+' '}</span>
+                            <span className="order-info-title">{i.pname+' '+i.name+' '}</span>
                         ))}
                     </div>
                 </div>

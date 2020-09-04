@@ -11,13 +11,13 @@ const FoodOrderCart = ({item, i})=>{
                 <img className="p-2" src={item.food.img.data==null?noimage:`data:image/jpeg;base64,${item.food.img.data}`}/>
             </div>
             <div className="d-flex flex-column flex-lg-row flex-grow-1 justify-content-center justify-content-lg-between">
-                <span className="foc-name p-2 ml-3 align-items-center d-flex justify-content-center">{item.food.name}</span>
-                <div className="d-flex flex-column align-items-center align-items-lg-start justify-content-center" 
+                <span className="foc-name p-2 align-items-center d-flex justify-content-center">{item.food.name}</span>
+                <div className="order-info d-flex flex-column align-items-center align-items-lg-start justify-content-center" 
                 style={{maxWidth:'460px'}}>
                     {item.food.composition?
-                    <div style={{textAlign:'center'}}>Состав: {item.food.composition}</div>:null}
+                    <div style={{textAlign:'center'}}><div className="order-info-title">Состав:</div> {item.food.composition}</div>:null}
                     {item.ings&& item.ings.length>0?
-                    <div style={{textAlign:'center', width:'100%'}}>Добавки: {item.ings.map(i=>(
+                    <div style={{textAlign:'center', width:'100%'}}><div className="order-info-title">Добавки:</div> {item.ings.map(i=>(
                         <span className="pr-1">{i.name}</span>
                     ))}</div>:null}
                     <div style={{textAlign:'center', width:'100%'}}>

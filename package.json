@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev -p 8000",
     "build": "next build",
-    "start": "next start -p 3500"
+    "start": "next start -p 3500",
+    "export": "next export"
   },
   "dependencies": {
     "@svgr/webpack": "^5.4.0",
