@@ -121,13 +121,23 @@ const Params = ()=>{
                                                         }
                                                         return pl;
                                                     })}))}
-                                                    // mutate={()=>(change({_id:param._id, coast: document.getElementById(l._id).value}))}
                                                     close={()=>closeEdit(l._id)}
                                                     param='coast'
                                                 />
-                                                :<span onClick={()=>openEdit(l._id)}>{l.coast}руб</span>}
-                                                {/* <span className="ml-2"
-                                                >{l.coast}руб</span> */}
+                                                :<span onClick={()=>openEdit(l._id)}>{l.coast}руб,&nbsp;</span>}
+                                                {edit.indexOf(l._id+1)>=0?
+                                                <Input 
+                                                    item={l} 
+                                                    mutate={()=>(changeParam({_id:param._id, list: param.list.map((pl)=>{
+                                                        if(pl._id==l._id){
+                                                            pl.weight = document.getElementById(l._id).value;
+                                                        }
+                                                        return pl;
+                                                    })}))}
+                                                    close={()=>closeEdit(l._id+1)}
+                                                    param='weight'
+                                                />
+                                                :<span onClick={()=>openEdit(l._id+1)}>{l.weight}г</span>}
                                                 <span className="svg-close ml-2"><Close height="10" width="10" 
                                                 onClick={
                                                     ()=>{
@@ -136,18 +146,7 @@ const Params = ()=>{
                                                         changeParam({_id: param._id, list: param.list})
                                                     }
                                                 }
-                                                // style={{position: 'absolute', right: '5px', top:'4px'}}
                                                 /></span>
-                                                {/* <button className="btn btn-danger ml-2"
-                                                    onClick={
-                                                        ()=>{
-                                                        let index = param.list.indexOf(l);
-                                                        param.list.splice(index,1);
-                                                        console.log(index);
-                                                        changeParam({_id: param._id, list: param.list})
-                                                    }
-                                                }
-                                                >Удалить</button> */}
                                             </div>
                                 })}
                                 </div>

@@ -11,11 +11,25 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
     const [drop, setDrop] = useState(true);
     const {cart} = useContext(AppContext);
     const [amount, setAmount] = useState(0);
+    const [weight, setWeight] = useState(food.weight);
     const [ings, setIngs] = useState([]);
-    const [selected, setSelected] = useState(food.params.map(p=>({_id:p._id, name: p.list[0].name, coast: p.list[0].coast, pname: p.name})));
+    const [selected, setSelected] = useState(
+            food.params.map(
+                p=>{
+                    let selected = {
+                        _id:p._id, 
+                        name: p.list[0].name, 
+                        coast: p.list[0].coast, 
+                        weight: p.list[0].weight, 
+                        pname: p.name
+                    }
+                    // console.log("PARAM", selected);
+                    return selected;
+                }
+        ));
     // useEffect(()=>{
-    //     console.log(ings);
-    // }, [ings])
+    //     console.log("SELECTED NEW ",food.name," ",selected);
+    // },[selected])
     useEffect(()=>{
         const ingamount = ings.reduce(
             (prev, i)=>{
@@ -26,11 +40,14 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                 return prev+p.coast;
             },0)
         setAmount(food.coast+ingamount + pamount);
+        let plus = selected.length>0?selected[0].weight:0;
+        console.log(plus);
+        setWeight(food.weight+plus);
     }, [ings, selected])
     useEffect(()=>{
         if(param==false || param==null){
             setIngs([]);
-            setSelected(food.params.map(p=>({_id:p._id, name: p.list[0].name, coast: p.list[0].coast, pname: p.name})));
+            setSelected(food.params.map(p=>({_id:p._id, name: p.list[0].name, coast: p.list[0].coast, weight: p.list[0].weight, pname: p.name})));
         }
     }, [param])
 
@@ -82,9 +99,8 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                             {food.composition} 
                         </p>
                         <p className="food-weight mb-0" >
-                        {food.weight!=0?
-                            <>Вес: {food.weight} гр.</>
-                        :null}</p>
+
+                        </p>
                     </>
                     :null}
                     {param&&drop?
@@ -111,7 +127,6 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                                     k1='ingredients'
                                     close={()=>setDrop(false)}
                                 />
-                                {/* <a class="dropdown-item" href="#">Action</a> */}
                             </div>
                             </div>
                         ))
@@ -119,12 +134,14 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                     <div className="ml-2">
                         {food.params&&param?food.params.map((p)=>{
                             return (
-                                <div 
-                                key={p._id}>
-                                <Param param={p} selected={selected} setSelected={setSelected}/>
+                                <div key={p._id}>
+                                    <Param param={p} selected={selected} setSelected={setSelected}/>
                                 </div>
                             )
                         }):null}
+                        {food.weight!=0?
+                            <>Вес: {weight} гр.</>
+                        :null}
                     </div>
                 </div>
                 <div className="d-flex justify-content-between flex-column">
@@ -137,7 +154,7 @@ const Food = ({food, param, showParam, ingredients, handleParam})=>{
                     <hr style={{width:'100%'}}/>
                     <div className="d-flex justify-content-between w-100 pl-2 pr-2 pb-1">
                         <div className="price d-flex align-items-center">
-                            {amount} 
+                            {amount}
                             <Ruble className="ml-2 ruble" width="26" height="26"/>
                         </div>
                         {param?
@@ -178,6 +195,7 @@ const Param = ({param, selected, setSelected})=>{
                                     newS.pname = param.name;
                                     newS.name = l.name;
                                     newS.coast = l.coast;
+                                    newS.weight = l.weight;
                                     setSelect(l.name);
                                 }
                                 return newS;

@@ -34,7 +34,7 @@ export async function getStaticProps(){
     for(let i=0; i < foodtypes.length; i++){
       var fooddata = await fetch(
         {
-          query: "query fetchFood($_id:String!){food(_id:$_id){name composition weight _id ingredients{name _id coast type{_id name}} avIngTypes{_id name} img{data contentType} coast params{_id list{name coast} name}}}",
+          query: "query fetchFood($_id:String!){food(_id:$_id){name composition weight _id ingredients{name _id coast type{_id name}} avIngTypes{_id name} img{data contentType} coast params{_id list{name coast weight} name}}}",
           variables:{_id: foodtypes[i]._id},
         });
         console.log("FFFFFFFFFFFFFFFFFF",fooddata);
